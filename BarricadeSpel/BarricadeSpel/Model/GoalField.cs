@@ -8,6 +8,25 @@ namespace BarricadeSpel.Model
 {
     class GoalField : Field
     {
-        
+        public Movable Contains
+        {
+            set 
+            {
+                _contains = value;
+                FinishGame(); 
+            }
+        }
+
+        private void FinishGame()
+        {
+            //finish game logic
+        }
+
+        public bool CanMoveTo(string type)
+        {
+            if (type == "barricade")
+                return false;
+            return true;
+        }
     }
 }

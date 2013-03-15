@@ -8,5 +8,12 @@ namespace BarricadeSpel.Model
 {
     class SafeField : Field
     {
+
+        public bool CanMoveTo(string type)
+        {
+            if (Contains == null)
+                return true;
+            return false;
+        }
     }
 }

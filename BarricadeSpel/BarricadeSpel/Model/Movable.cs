@@ -23,6 +23,8 @@ namespace BarricadeSpel.Model
             } 
         }
 
+        public string Type { get; set; }
+
 
 
     }

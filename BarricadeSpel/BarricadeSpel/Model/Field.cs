@@ -8,12 +8,14 @@ namespace BarricadeSpel.Model
 {
     class Field
     {
-        public Movable Contains { get; set; } //Updated by movable! Controller doesn't need to touch this outside loading the game. 
+        protected Movable _contains;
 
-        private Field _exitN;
-        private Field _exitE;
-        private Field _exitS;
-        private Field _exitW;
+        public Movable Contains { get { return _contains; } set { _contains = value; } } //Updated by movable! Controller doesn't need to touch this outside loading the game. 
+
+        protected Field _exitN;
+        protected Field _exitE;
+        protected Field _exitS;
+        protected Field _exitW;
 
 
         //Logic for updating exits, automatically changes the number of exits as needed. 
@@ -134,6 +136,15 @@ namespace BarricadeSpel.Model
             this.ExitW = exitW;
             this.BarricareAllowed = barricadeAllowed;
             this.ReturnTo = returnTo;
+        }
+
+        public bool CanMoveTo(string type)
+        {
+            if (Contains != null)
+                if (Contains.Type == "barricade")
+                    return false;
+
+            return true;
         }
 
     }
