@@ -140,6 +140,11 @@ namespace BarricadeSpel.Model
 
         public bool CanMoveTo(string type)
         {
+            return true;
+        }
+
+        public bool CanMoveOver()
+        {
             if (Contains != null)
                 if (Contains.Type == "barricade")
                     return false;

@@ -27,7 +27,7 @@ namespace BarricadeSpel.Model
         }
 
         // Finishes the game
-        private void finishGame()
+        private void finishGame() //Done by GoalField?
         {
             //if (Position == 100)//finish
             //    Console.WriteLine("Gefeliciteerd " + Color + "! Je hebt gewonnen!");

@@ -8,5 +8,7 @@ namespace BarricadeSpel.Model
 {
     class BarricadeField : Field
     {
+        //Acts as a normal field, only difference is looks. 
+        //No need to change this. 
     }
 }

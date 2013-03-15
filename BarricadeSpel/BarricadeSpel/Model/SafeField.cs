@@ -11,7 +11,7 @@ namespace BarricadeSpel.Model
 
         public bool CanMoveTo(string type)
         {
-            if (Contains == null)
+            if (Contains == null && type == "pion")
                 return true;
             return false;
         }

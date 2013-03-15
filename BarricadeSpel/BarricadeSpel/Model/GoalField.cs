@@ -17,7 +17,7 @@ namespace BarricadeSpel.Model
             }
         }
 
-        private void FinishGame()
+        private void FinishGame() //TODO make whole function
         {
             //finish game logic
         }
@@ -27,6 +27,11 @@ namespace BarricadeSpel.Model
             if (type == "barricade")
                 return false;
             return true;
+        }
+
+        public bool CanMoveOver()
+        {
+            return false;
         }
     }
 }
