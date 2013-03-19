@@ -8,8 +8,14 @@ namespace BarricadeSpel.Model
 {
     class Forest : Field
     {
-        private List<Movable> _contains;
-        public Movable Contains //TODO fix setter
+        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo)
+            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo)
+        {
+            _contains = new List<Movable>();
+        }
+
+        private new List<Movable> _contains;
+        public new Movable Contains //TODO fix setter
         {
             get { return null; }
             set
@@ -26,12 +32,12 @@ namespace BarricadeSpel.Model
             }
         }
 
-        public bool CanMoveTo(string type)
+        public new bool CanMoveTo(string type)
         {
             return false;
         }
 
-        public bool CanMoveOver()
+        public new bool CanMoveOver()
         {
             return false;
         }

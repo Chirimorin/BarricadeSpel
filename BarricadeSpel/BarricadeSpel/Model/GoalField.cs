@@ -8,7 +8,13 @@ namespace BarricadeSpel.Model
 {
     class GoalField : Field
     {
-        public Movable Contains
+        public GoalField(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo)
+            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo)
+        {
+            
+        }
+
+        public new Movable Contains
         {
             set 
             {
@@ -22,14 +28,14 @@ namespace BarricadeSpel.Model
             //finish game logic
         }
 
-        public bool CanMoveTo(string type)
+        public new bool CanMoveTo(string type)
         {
             if (type == "barricade")
                 return false;
             return true;
         }
 
-        public bool CanMoveOver()
+        public new bool CanMoveOver()
         {
             return false;
         }

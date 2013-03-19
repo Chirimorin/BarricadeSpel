@@ -138,6 +138,11 @@ namespace BarricadeSpel.Model
             this.ReturnTo = returnTo;
         }
 
+        public Field()
+        {
+
+        }
+
         public bool CanMoveTo(string type)
         {
             return true;
