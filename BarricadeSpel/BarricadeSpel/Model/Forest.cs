@@ -8,13 +8,16 @@ namespace BarricadeSpel.Model
 {
     class Forest : Field
     {
-        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo)
-            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo)
+        public int NumForest { get; set; }
+        private new List<Movable> _contains;
+
+        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, int numForest)
+            : base(exitN, exitE, exitS, exitW, false, 0)
         {
+            NumForest = numForest;
             _contains = new List<Movable>();
         }
 
-        private new List<Movable> _contains;
         public new Movable Contains //TODO fix setter
         {
             get { return null; }

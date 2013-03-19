@@ -16,7 +16,8 @@ namespace BarricadeSpel.Model
             {
                 if (value != null)
                 {
-                    _position.Contains = null;
+                    if (_position != null)
+                        _position.Contains = null;
                     _position = value;
                     _position.Contains = this;
                 }
@@ -24,7 +25,6 @@ namespace BarricadeSpel.Model
         }
 
         public string Type { get; set; }
-
 
         public void MoveTo(Field field) //TODO return hit pawn, let player move barricade
         {

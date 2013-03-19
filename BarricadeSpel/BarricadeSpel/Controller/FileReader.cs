@@ -73,17 +73,41 @@ namespace BarricadeSpel.Controller
                         switch (characters[(j * 4) + 1, i]) //vakjes aanmaken. 
                         {
                             case "<":
-
+                                if (characters[(j * 4) + 2, i] == " ") //goal
+                                {
+                                    fields[j - 1, i] = new Model.GoalField(exitN, null, null, exitW);
+                                    break;
+                                }
+                                int numForest;
+                                if (int.TryParse(characters[1, i], out numForest)) //forest
+                                {
+                                    fields[j - 1, i] = new Model.Forest(exitN, null, null, exitW, numForest);
+                                    break;
+                                }
+                                //else startfield
+                                fields[j - 1, i] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i]);
                                 break;
                             case "(":
                                 fields[j - 1, i] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                             case "[":
-                                //TODO: Barricade vakje maken.
-                                fields[j - 1, i] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                fields[j - 1, i] = new Model.BarricadeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                             case "{":
                                 fields[j - 1, i] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                break;
+                        }
+
+                        switch (characters[(j * 4) + 2, i])
+                        {
+                            case "*":
+                                new Model.Barricade(fields[j - 1, i]);
+                                break;
+                            case "R":
+                            case "Y":
+                            case "G":
+                            case "B":
+                                new Model.Pawn(fields[j - 1, i], characters[(j * 4) + 2, i]);
                                 break;
                         }
                     }

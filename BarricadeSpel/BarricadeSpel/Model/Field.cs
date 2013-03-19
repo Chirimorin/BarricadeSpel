@@ -10,7 +10,7 @@ namespace BarricadeSpel.Model
     {
         protected Movable _contains;
 
-        public Movable Contains { get { return _contains; } set { _contains = value; } } //Updated by movable! Controller doesn't need to touch this outside loading the game. 
+        public Movable Contains { get { return _contains; } set { _contains = value; } } //Updated by movable! Controllers don't need to touch this. 
 
         protected Field _exitN;
         protected Field _exitE;

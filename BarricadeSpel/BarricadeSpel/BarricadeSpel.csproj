@@ -62,6 +62,7 @@
     <Compile Include="Model\Movable.cs" />
     <Compile Include="Model\Pawn.cs" />
     <Compile Include="Model\SafeField.cs" />
+    <Compile Include="Model\StartField.cs" />
     <Compile Include="TextView.xaml.cs">
       <DependentUpon>TextView.xaml</DependentUpon>
     </Compile>
