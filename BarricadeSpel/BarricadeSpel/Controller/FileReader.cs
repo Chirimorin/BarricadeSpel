@@ -40,8 +40,8 @@ namespace BarricadeSpel.Controller
             {
                 if (i % 2 != 0) //only parse uneven lines, even lines are all connector lines.
                 {
-                    //check for returnto
-                    
+                    int returnTo = 0;
+                    int.TryParse(characters[1, i], out returnTo);
 
                     bool barricadeAllowed = false;
                     if (characters[2, i] == "B")
@@ -51,19 +51,39 @@ namespace BarricadeSpel.Controller
 
                     for (int j = 1; j < numChars / 4; j++)
                     {
+                        Model.Field exitN = null;
+                        Model.Field exitW = null;
+
+                        if (i != 0)
+                        {
+                            if (characters[(j * 4) + 2, i - 1] == "|")
+                            {
+                                exitN = fields[j - 1, i - 1];
+                            }
+                        }
+
+                        if (j != 1)
+                        {
+                            if (characters[(j * 4), i] == "-")
+                            {
+                                exitW = fields[j - 2, i];
+                            }
+                        }
+
                         switch (characters[(j * 4) + 1, i]) //vakjes aanmaken. 
                         {
                             case "<":
 
                                 break;
                             case "(":
-
+                                fields[j - 1, i] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                             case "[":
-
+                                //TODO: Barricade vakje maken.
+                                fields[j - 1, i] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                             case "{":
-
+                                fields[j - 1, i] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                         }
                     }
