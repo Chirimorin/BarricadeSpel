@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace BarricadeSpel.Model
     {
         protected Movable _contains;
 
-        public Movable Contains { get { return _contains; } set { _contains = value; } } //Updated by movable! Controllers don't need to touch this. 
+        public Movable Contains { get { return _contains; } set { Debug.WriteLine("Added movable to field"); _contains = value; } } //Updated by movable! Controllers don't need to touch this. 
 
         protected Field _exitN;
         protected Field _exitE;
@@ -136,6 +137,13 @@ namespace BarricadeSpel.Model
             this.ExitW = exitW;
             this.BarricareAllowed = barricadeAllowed;
             this.ReturnTo = returnTo;
+            Debug.Write("Field made. ");
+            if (exitN != null)
+                Debug.Write("ExitN given ");
+            if (exitW != null)
+                Debug.Write("ExitW given ");
+            Debug.WriteLine("");
+            Debug.WriteLine("");
         }
 
         public Field()

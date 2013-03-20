@@ -34,17 +34,19 @@ namespace BarricadeSpel.Controller
                 }
             }
 
+            Debug.WriteLine("");
+
             Model.Field[,] fields = new Model.Field[(numLines + 1) / 2, (numChars / 4) - 1];
 
             for (int i = 0; i < numLines; i++)
             {
-                if (i % 2 != 0) //only parse uneven lines, even lines are all connector lines.
+                if (i % 2 == 0) //only parse even lines, uneven lines are all connector lines.
                 {
                     int returnTo = 0;
-                    int.TryParse(characters[1, i], out returnTo);
+                    int.TryParse(characters[0, i], out returnTo);
 
                     bool barricadeAllowed = false;
-                    if (characters[2, i] == "B")
+                    if (characters[1, i] == "B")
                     {
                         barricadeAllowed = true;
                     }
@@ -56,58 +58,65 @@ namespace BarricadeSpel.Controller
 
                         if (i != 0)
                         {
-                            if (characters[(j * 4) + 2, i - 1] == "|")
+                            if (characters[(j * 4) + 1, i - 1] == "|")
                             {
-                                exitN = fields[j - 1, i - 1];
+                                Debug.WriteLine("ExitN found");
+
+                                exitN = fields[j - 1, (i/2) - 1];
                             }
                         }
 
                         if (j != 1)
                         {
-                            if (characters[(j * 4), i] == "-")
+                            if (characters[(j * 4) - 1, i] == "-")
                             {
-                                exitW = fields[j - 2, i];
+                                Debug.WriteLine("ExitW found");
+                                exitW = fields[j - 2, (i/2)];
                             }
                         }
 
-                        switch (characters[(j * 4) + 1, i]) //vakjes aanmaken. 
+                        switch (characters[(j * 4), i]) //vakjes aanmaken. 
                         {
                             case "<":
-                                if (characters[(j * 4) + 2, i] == " ") //goal
+                                if (characters[(j * 4) + 1, i] == " ") //goal
                                 {
-                                    fields[j - 1, i] = new Model.GoalField(exitN, null, null, exitW);
+                                    fields[j - 1, (i/2)] = new Model.GoalField(exitN, null, null, exitW);
                                     break;
                                 }
                                 int numForest;
-                                if (int.TryParse(characters[1, i], out numForest)) //forest
+                                if (int.TryParse(characters[(j * 4) + 1, i], out numForest)) //forest
                                 {
-                                    fields[j - 1, i] = new Model.Forest(exitN, null, null, exitW, numForest);
+                                    fields[j - 1, (i/2)] = new Model.Forest(exitN, null, null, exitW, numForest);
                                     break;
                                 }
                                 //else startfield
-                                fields[j - 1, i] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i]);
+                                fields[j - 1, (i / 2)] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i]);
                                 break;
                             case "(":
-                                fields[j - 1, i] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                fields[j - 1, (i / 2)] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                             case "[":
-                                fields[j - 1, i] = new Model.BarricadeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                fields[j - 1, (i / 2)] = new Model.BarricadeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
                                 break;
                             case "{":
-                                fields[j - 1, i] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                fields[j - 1, (i / 2)] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                break;
+                            case " ":
+                                if (characters[(j * 4)+1, i] == "|")
+                                    fields[j - 1, (i / 2)] = new Model.LinkField(exitN, null, null, exitW);
                                 break;
                         }
 
-                        switch (characters[(j * 4) + 2, i])
+                        switch (characters[(j * 4) + 1, i])
                         {
                             case "*":
-                                new Model.Barricade(fields[j - 1, i]);
+                                new Model.Barricade(fields[j - 1, (i / 2)]);
                                 break;
                             case "R":
                             case "Y":
                             case "G":
                             case "B":
-                                new Model.Pawn(fields[j - 1, i], characters[(j * 4) + 2, i]);
+                                new Model.Pawn(fields[j - 1, (i / 2)], characters[(j * 4) + 1, i]);
                                 break;
                         }
                     }
