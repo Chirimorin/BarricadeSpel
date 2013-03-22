@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,7 @@ namespace BarricadeSpel
             int x = drawFieldArgs.X;
             int y = drawFieldArgs.Y;
 
+            Debug.WriteLine("Draw field text, Type: " + type + ", X: " + x + ", Y: " + y + ".");
             //TODO veld tekenen.
         }
 
@@ -44,6 +46,7 @@ namespace BarricadeSpel
             int x = makeGridArgs.X;
             int y = makeGridArgs.Y;
 
+            Debug.WriteLine("Make Grid text, X: " + x + ", Y: " + y + ".");
             //TODO grid aanmaken.
         }
     }

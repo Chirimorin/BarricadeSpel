@@ -24,6 +24,7 @@ namespace BarricadeSpel.Controller
             MainController = mainController;
 
             OpenView("main");
+            OpenView("text");
         }
 
         public void OpenView(string type)
@@ -42,7 +43,7 @@ namespace BarricadeSpel.Controller
                 MainWindow mainWindow = new MainWindow(this);
 
                 drawField += mainWindow.DrawField;
-                makeGrid += mainWindow.DrawField;
+                makeGrid += mainWindow.MakeGrid;
                 //TODO extra eventhandlers linken
             }
 

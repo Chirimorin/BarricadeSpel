@@ -43,7 +43,8 @@ namespace BarricadeSpel
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewController.OpenView("main");
+            ViewController.MakeGrid(1, 2);
+            ViewController.DrawField("Type", 1, 2);
         }
 
         public void DrawField(object sender, EventArgs e)
@@ -53,6 +54,7 @@ namespace BarricadeSpel
             int x = drawFieldArgs.X;
             int y = drawFieldArgs.Y;
 
+            Debug.WriteLine("Draw field main, Type: " + type + ", X: " + x + ", Y: " + y + ".");
             //TODO veld tekenen.
         }
 
@@ -62,6 +64,7 @@ namespace BarricadeSpel
             int x = makeGridArgs.X;
             int y = makeGridArgs.Y;
 
+            Debug.WriteLine("Make Grid main, X: " + x + ", Y: " + y + ".");
             //TODO grid aanmaken.
         }
     }
