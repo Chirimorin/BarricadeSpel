@@ -146,11 +146,6 @@ namespace BarricadeSpel.Model
             Debug.WriteLine("");
         }
 
-        public Field()
-        {
-
-        }
-
         public bool CanMoveTo(string type)
         {
             return true;

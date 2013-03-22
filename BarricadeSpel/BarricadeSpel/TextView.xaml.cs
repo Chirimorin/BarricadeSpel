@@ -19,9 +19,32 @@ namespace BarricadeSpel
     /// </summary>
     public partial class TextView : Window
     {
-        public TextView()
+        private Controller.ViewController ViewController { get; set; }
+
+        public TextView(Controller.ViewController viewController)
         {
+            ViewController = viewController;
             InitializeComponent();
+            this.Show();
+        }
+
+        public void DrawField(object sender, EventArgs e)
+        {
+            MyEventArgs.DrawFieldArgs drawFieldArgs = (MyEventArgs.DrawFieldArgs)e;
+            string type = drawFieldArgs.Type;
+            int x = drawFieldArgs.X;
+            int y = drawFieldArgs.Y;
+
+            //TODO veld tekenen.
+        }
+
+        public void MakeGrid(object sender, EventArgs e)
+        {
+            MyEventArgs.MakeGridArgs makeGridArgs = (MyEventArgs.MakeGridArgs)e;
+            int x = makeGridArgs.X;
+            int y = makeGridArgs.Y;
+
+            //TODO grid aanmaken.
         }
     }
 }

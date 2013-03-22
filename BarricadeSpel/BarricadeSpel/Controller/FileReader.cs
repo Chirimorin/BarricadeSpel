@@ -119,6 +119,9 @@ namespace BarricadeSpel.Controller
                                 new Model.Pawn(fields[j - 1, (i / 2)], characters[(j * 4) + 1, i]);
                                 break;
                         }
+
+                        //TODO pionnen aan spelers linken IPV alleen velden
+
                     }
                 }
             }

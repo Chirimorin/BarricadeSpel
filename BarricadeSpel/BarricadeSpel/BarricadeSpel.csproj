@@ -54,6 +54,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\FileReader.cs" />
+    <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\ViewController.cs" />
+    <Compile Include="MyEventArgs\DrawFieldArgs.cs" />
     <Compile Include="Model\Barricade.cs" />
     <Compile Include="Model\BarricadeField.cs" />
     <Compile Include="Model\Field.cs" />
@@ -62,8 +65,10 @@
     <Compile Include="Model\LinkField.cs" />
     <Compile Include="Model\Movable.cs" />
     <Compile Include="Model\Pawn.cs" />
+    <Compile Include="Model\Player.cs" />
     <Compile Include="Model\SafeField.cs" />
     <Compile Include="Model\StartField.cs" />
+    <Compile Include="MyEventArgs\MakeGridArgs.cs" />
     <Compile Include="TextView.xaml.cs">
       <DependentUpon>TextView.xaml</DependentUpon>
     </Compile>

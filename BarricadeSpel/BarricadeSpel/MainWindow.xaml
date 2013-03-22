@@ -3,6 +3,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Barricade Spel" Height="350" Width="525">
     <Grid>
-        
+        <Grid Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+          Background="Black">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="21" />
+                <RowDefinition />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+            <Menu
+            Grid.Row="0">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open" Click="OpenItem_Click" />
+                    <Separator />
+                    <MenuItem Header="E_xit" Click="Exit_Click" />
+                </MenuItem>
+                <MenuItem Header="Test" Click="TestButton_Click" />
+            </Menu>
+            <Grid 
+            Grid.Row="1"
+            Name="SpelGrid"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Black">
+            </Grid>
+            <Grid
+            Grid.Row="2"
+            Background="White">
+                <Label
+                Name="LabelMessage"
+                Content="Stuff" />
+
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
