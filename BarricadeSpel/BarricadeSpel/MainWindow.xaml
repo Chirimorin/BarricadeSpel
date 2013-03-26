@@ -19,12 +19,7 @@
                 </MenuItem>
                 <MenuItem Header="Test" Click="TestButton_Click" />
             </Menu>
-            <Grid 
-            Grid.Row="1"
-            Name="SpelGrid"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="Black">
+            <Grid Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" ShowGridLines="False">
             </Grid>
             <Grid
             Grid.Row="2"

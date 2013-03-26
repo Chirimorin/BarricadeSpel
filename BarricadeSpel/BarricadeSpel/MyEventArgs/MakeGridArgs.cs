@@ -10,6 +10,9 @@ namespace BarricadeSpel.MyEventArgs
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public int XCells { get; set; }
+        public int YCells { get; set; }
+        public int CellSize { get; set; }
 
 
         public MakeGridArgs(int x, int y) 

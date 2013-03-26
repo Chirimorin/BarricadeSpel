@@ -55,7 +55,45 @@ namespace BarricadeSpel
             int y = drawFieldArgs.Y;
 
             Debug.WriteLine("Draw field main, Type: " + type + ", X: " + x + ", Y: " + y + ".");
-            //TODO veld tekenen.
+            switch (type)
+            {
+                case "Field":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "StartField":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "SafeField":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "GoalField":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "LinkField":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "BarricadeField":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "Forest":
+                    // TODO laad of teken plaatje
+                    break;
+
+                case "Barricade":
+                    // TODO laad of teken plaatje
+                    break;
+                    
+                case "Pawn":
+                    // TODO laad of teken plaatje
+                    break;
+            }
+            
         }
 
         public void MakeGrid(object sender, EventArgs e)
@@ -65,7 +103,12 @@ namespace BarricadeSpel
             int y = makeGridArgs.Y;
 
             Debug.WriteLine("Make Grid main, X: " + x + ", Y: " + y + ".");
-            //TODO grid aanmaken.
+            Grid spelGrid = new Grid();
+            spelGrid.Width = x;
+            spelGrid.Height = y;
+            spelGrid.HorizontalAlignment = HorizontalAlignment.Center;
+            spelGrid.VerticalAlignment = VerticalAlignment.Center;
+            spelGrid.ShowGridLines = false;
         }
     }
 }
