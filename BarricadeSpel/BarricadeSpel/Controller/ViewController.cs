@@ -24,7 +24,7 @@ namespace BarricadeSpel.Controller
             MainController = mainController;
 
             OpenView("main");
-            OpenView("text");
+            //OpenView("text");
         }
 
         public void OpenView(string type)

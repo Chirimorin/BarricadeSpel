@@ -33,7 +33,7 @@ namespace BarricadeSpel.Controller
 
             if (result == true)
             {
-                Controller.FileReader.Read(dialog.FileName);
+                Controller.FileReader.Read(dialog.FileName, viewController);
             }
         }
     }

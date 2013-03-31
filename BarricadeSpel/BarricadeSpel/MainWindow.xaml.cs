@@ -59,6 +59,7 @@ namespace BarricadeSpel
             {
                 case "Field":
                     // TODO laad of teken plaatje
+                    
                     break;
 
                 case "StartField":
@@ -84,14 +85,6 @@ namespace BarricadeSpel
                 case "Forest":
                     // TODO laad of teken plaatje
                     break;
-
-                case "Barricade":
-                    // TODO laad of teken plaatje
-                    break;
-                    
-                case "Pawn":
-                    // TODO laad of teken plaatje
-                    break;
             }
             
         }
@@ -99,16 +92,55 @@ namespace BarricadeSpel
         public void MakeGrid(object sender, EventArgs e)
         {
             MyEventArgs.MakeGridArgs makeGridArgs = (MyEventArgs.MakeGridArgs)e;
+
+            //X en Y zijn aantal vakjes, size wordt bepaald door het scherm. 
             int x = makeGridArgs.X;
             int y = makeGridArgs.Y;
 
             Debug.WriteLine("Make Grid main, X: " + x + ", Y: " + y + ".");
-            Grid spelGrid = new Grid();
-            spelGrid.Width = x;
-            spelGrid.Height = y;
-            spelGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            spelGrid.VerticalAlignment = VerticalAlignment.Center;
-            spelGrid.ShowGridLines = false;
+
+            int CellSize = getCellSize(y, x);
+
+            for (int i = 0; i < x; i++)
+            {
+                ColumnDefinition col = new ColumnDefinition();
+                col.Width = new GridLength(CellSize);
+                SpelGrid.ColumnDefinitions.Add(col);
+            }
+
+            for (int i = 0; i < y; i++)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new GridLength(CellSize);
+                SpelGrid.RowDefinitions.Add(row);
+            }
+
+            SpelGrid.ShowGridLines = false;
+        }
+
+        private int getCellSize(int nRows, int nCols)
+        {
+            double w = MainGrid.ActualWidth;
+            double h = MainGrid.ActualHeight - 76;
+
+            Debug.WriteLine("Found window size (" + w + "," + h + ")");
+
+            int hCellSize = (int)(h / nRows);
+            int wCellSize = (int)(w / nCols);
+
+            Debug.WriteLine("hCellSize: " + hCellSize);
+            Debug.WriteLine("wCellSize: " + wCellSize);
+
+            if (hCellSize < wCellSize)
+            {
+                Debug.WriteLine("Chosen hCellSize as CellSize");
+                return hCellSize;
+            }
+            else
+            {
+                Debug.WriteLine("Chosen wCellSize as CellSize");
+                return wCellSize;
+            }
         }
     }
 }

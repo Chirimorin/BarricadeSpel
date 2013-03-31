@@ -13,7 +13,7 @@ namespace BarricadeSpel.Controller
          * Reads all lines in a file.
          * @param domain: The domain name of the file.
          */
-        public static void Read(string domain)
+        public static void Read(string domain, ViewController viewController)
         {
             string[] lines = System.IO.File.ReadAllLines(domain);
             string[,] characters = new string[lines[0].Length, lines.Length];
@@ -37,6 +37,8 @@ namespace BarricadeSpel.Controller
             Debug.WriteLine("");
 
             Model.Field[,] fields = new Model.Field[(numLines + 1) / 2, (numChars / 4) - 1];
+
+            viewController.MakeGrid((numLines + 1) / 2, (numChars / 4) - 1);
 
             for (int i = 0; i < numLines; i++)
             {
@@ -81,29 +83,38 @@ namespace BarricadeSpel.Controller
                                 if (characters[(j * 4) + 1, i] == " ") //goal
                                 {
                                     fields[j - 1, (i/2)] = new Model.GoalField(exitN, null, null, exitW);
+                                    viewController.DrawField("GoalField", j - 1, (i / 2));
                                     break;
                                 }
                                 int numForest;
                                 if (int.TryParse(characters[(j * 4) + 1, i], out numForest)) //forest
                                 {
                                     fields[j - 1, (i/2)] = new Model.Forest(exitN, null, null, exitW, numForest);
+                                    viewController.DrawField("Forest", j - 1, (i / 2));
                                     break;
                                 }
                                 //else startfield
                                 fields[j - 1, (i / 2)] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i]);
+                                viewController.DrawField("StartField", j - 1, (i / 2));
                                 break;
                             case "(":
                                 fields[j - 1, (i / 2)] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                viewController.DrawField("Field", j - 1, (i / 2));
                                 break;
                             case "[":
                                 fields[j - 1, (i / 2)] = new Model.BarricadeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                viewController.DrawField("BarricadeField", j - 1, (i / 2));
                                 break;
                             case "{":
                                 fields[j - 1, (i / 2)] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
+                                viewController.DrawField("SafeField", j - 1, (i / 2));
                                 break;
                             case " ":
-                                if (characters[(j * 4)+1, i] == "|")
+                                if (characters[(j * 4) + 1, i] == "|")
+                                {
                                     fields[j - 1, (i / 2)] = new Model.LinkField(exitN, null, null, exitW);
+                                    viewController.DrawField("LinkField", j - 1, (i / 2));
+                                }
                                 break;
                         }
 
