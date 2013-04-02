@@ -74,6 +74,22 @@ namespace BarricadeSpel
                     myCircle.VerticalAlignment = VerticalAlignment.Stretch;
                     myCircle.SetValue(Grid.ColumnProperty, x);
                     myCircle.SetValue(Grid.RowProperty, y);
+                    Line myHorizontalLine = new Line();
+                    myHorizontalLine.StrokeThickness = 5;
+                    myHorizontalLine.Stroke = Brushes.Black;
+                    myHorizontalLine.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    myHorizontalLine.VerticalAlignment = VerticalAlignment.Center;
+                    myHorizontalLine.SetValue(Grid.ColumnProperty, x);
+                    myHorizontalLine.SetValue(Grid.RowProperty, y);
+                    Line myVerticalLine = new Line();
+                    myVerticalLine.StrokeThickness = 5;
+                    myVerticalLine.Stroke = Brushes.Black;
+                    myVerticalLine.HorizontalAlignment = HorizontalAlignment.Center;
+                    myVerticalLine.VerticalAlignment = VerticalAlignment.Stretch;
+                    myVerticalLine.SetValue(Grid.ColumnProperty, x);
+                    myVerticalLine.SetValue(Grid.RowProperty, y);
+
+
                     switch (type)
                     {
                         case "Field":
@@ -94,12 +110,11 @@ namespace BarricadeSpel
                         case "BarricadeField":
                             myCircle.Fill = System.Windows.Media.Brushes.Red;
                             break;
+                        case "LinkField":
+                            myHorizontalLine.Fill = Brushes.Black;
+                            break;
                     }
                     SpelGrid.Children.Add(myCircle);
-                    break;
-                case "LinkField":
-                    //TODO teken link
-                    break;
                 case "Forest":
                     //TODO teken forest
                     break;
