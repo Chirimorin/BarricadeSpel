@@ -24,7 +24,7 @@
                 Name="SpelGrid"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Background="Black" />
+                Background="Yellow" />
             
             <Grid
             Grid.Row="2"

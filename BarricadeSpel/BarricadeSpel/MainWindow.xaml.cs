@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,14 @@ namespace BarricadeSpel
     public partial class MainWindow : Window
     {
         private Controller.ViewController ViewController { get; set; }
+        private int CellSize { get; set; }
 
         public MainWindow(Controller.ViewController viewController)
         {
             ViewController = viewController;
             InitializeComponent();
+
+            MainGrid.SizeChanged += SizeChangedHandler;
             this.Show();
         }
 
@@ -44,7 +48,7 @@ namespace BarricadeSpel
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             ViewController.MakeGrid(1, 2);
-            ViewController.DrawField("Type", 1, 2);
+            ViewController.DrawField("Field", 1, 2);
         }
 
         public void DrawField(object sender, EventArgs e)
@@ -55,38 +59,51 @@ namespace BarricadeSpel
             int y = drawFieldArgs.Y;
 
             Debug.WriteLine("Draw field main, Type: " + type + ", X: " + x + ", Y: " + y + ".");
+
             switch (type)
             {
                 case "Field":
-                    // TODO laad of teken plaatje
-                    
-                    break;
-
                 case "StartField":
-                    // TODO laad of teken plaatje
-                    break;
-
                 case "SafeField":
-                    // TODO laad of teken plaatje
-                    break;
-
                 case "GoalField":
-                    // TODO laad of teken plaatje
-                    break;
-
-                case "LinkField":
-                    // TODO laad of teken plaatje
-                    break;
-
                 case "BarricadeField":
-                    // TODO laad of teken plaatje
-                    break;
+                    Ellipse myCircle = new Ellipse();
+                    myCircle.StrokeThickness = 5;
+                    myCircle.Stroke = Brushes.Transparent;
+                    myCircle.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    myCircle.VerticalAlignment = VerticalAlignment.Stretch;
+                    myCircle.SetValue(Grid.ColumnProperty, x);
+                    myCircle.SetValue(Grid.RowProperty, y);
+                    switch (type)
+                    {
+                        case "Field":
+                            myCircle.Fill = Brushes.Black;
+                            break;
 
+                        case "StartField":
+                            myCircle.Fill = Brushes.White;
+                            break;
+
+                        case "SafeField":
+                            myCircle.Fill = Brushes.Cyan;
+                            break;
+
+                        case "GoalField":
+                            myCircle.Fill = Brushes.LightGreen;
+                            break;
+                        case "BarricadeField":
+                            myCircle.Fill = System.Windows.Media.Brushes.Red;
+                            break;
+                    }
+                    SpelGrid.Children.Add(myCircle);
+                    break;
+                case "LinkField":
+                    //TODO teken link
+                    break;
                 case "Forest":
-                    // TODO laad of teken plaatje
+                    //TODO teken forest
                     break;
             }
-            
         }
 
         public void MakeGrid(object sender, EventArgs e)
@@ -99,7 +116,7 @@ namespace BarricadeSpel
 
             Debug.WriteLine("Make Grid main, X: " + x + ", Y: " + y + ".");
 
-            int CellSize = getCellSize(y, x);
+            findCellSize(y, x);
 
             for (int i = 0; i < x; i++)
             {
@@ -118,7 +135,7 @@ namespace BarricadeSpel
             SpelGrid.ShowGridLines = false;
         }
 
-        private int getCellSize(int nRows, int nCols)
+        private void findCellSize(int nRows, int nCols)
         {
             double w = MainGrid.ActualWidth;
             double h = MainGrid.ActualHeight - 76;
@@ -134,12 +151,30 @@ namespace BarricadeSpel
             if (hCellSize < wCellSize)
             {
                 Debug.WriteLine("Chosen hCellSize as CellSize");
-                return hCellSize;
+                CellSize = hCellSize;
             }
             else
             {
                 Debug.WriteLine("Chosen wCellSize as CellSize");
-                return wCellSize;
+                CellSize = wCellSize;
+            }
+        }
+
+        private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
+        {
+            RowDefinition[] rows = SpelGrid.RowDefinitions.ToArray();
+            ColumnDefinition[] columns = SpelGrid.ColumnDefinitions.ToArray();
+
+            findCellSize(SpelGrid.RowDefinitions.Count, SpelGrid.ColumnDefinitions.Count);
+
+            foreach (RowDefinition row in rows)
+            {
+                row.Height = new GridLength(CellSize);
+            }
+
+            foreach (ColumnDefinition column in columns)
+            {
+                column.Width = new GridLength(CellSize);
             }
         }
     }
