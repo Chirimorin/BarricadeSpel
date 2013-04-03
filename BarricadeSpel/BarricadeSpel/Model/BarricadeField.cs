@@ -8,10 +8,10 @@ namespace BarricadeSpel.Model
 {
     class BarricadeField : Field
     {
-        public BarricadeField(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo)
-            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo)
+        public BarricadeField(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo, xPos, yPos)
         {
-            
+
         }
 
         //Acts as a normal field, only difference is looks. 

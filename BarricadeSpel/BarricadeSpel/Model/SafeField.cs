@@ -8,8 +8,8 @@ namespace BarricadeSpel.Model
 {
     class SafeField : Field
     {
-        public SafeField(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo)
-            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo)
+        public SafeField(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo, xPos, yPos)
         {
             
         }

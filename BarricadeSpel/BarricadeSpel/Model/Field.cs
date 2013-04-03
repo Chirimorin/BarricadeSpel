@@ -18,6 +18,9 @@ namespace BarricadeSpel.Model
         protected Field _exitS;
         protected Field _exitW;
 
+        public int XPos { get; protected set; }
+        public int YPos { get; protected set; }
+
 
         //Logic for updating exits, automatically changes the number of exits as needed. 
         //Also updates the exits of other fields as needed. 
@@ -129,8 +132,10 @@ namespace BarricadeSpel.Model
         public bool BarricareAllowed { get; private set; }
         public int ReturnTo { get; private set; } //index of the forest to return to, 0 for start
 
-        public Field(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo)
+        public Field(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo, int xPos, int yPos)
         {
+            this.XPos = xPos;
+            this.YPos = yPos;
             this.ExitN = exitN;
             this.ExitE = exitE;
             this.ExitS = exitS;

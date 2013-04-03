@@ -10,8 +10,8 @@ namespace BarricadeSpel.Model
     {
         public string Color { get; set; } //Letter representation of the color.
 
-        public StartField(Field exitN, Field exitE, Field exitS, Field exitW, string color)
-            : base(exitN, exitE, exitS, exitW, false, 0)
+        public StartField(Field exitN, Field exitE, Field exitS, Field exitW, string color, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             Color = color.ToUpper();
         }

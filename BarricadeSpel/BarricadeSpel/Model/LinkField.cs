@@ -15,10 +15,10 @@ namespace BarricadeSpel.Model
 
         public new Movable Contains { get { Debug.WriteLine("Attempt to call get contains on LinkField"); return null; } set { Debug.WriteLine("Attempt to call set contains on LinkField"); } }
 
-        public LinkField(Field exitN, Field exitE, Field exitS, Field exitW)
-            : base(exitN, exitE, exitS, exitW, false, 0)
+        public LinkField(Field exitN, Field exitE, Field exitS, Field exitW, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
-            
+            Debug.WriteLine("LINKFIELD MADE!");
         }
 
         public new bool CanMoveTo(string type) //TODO update logic to pass through to next object. 

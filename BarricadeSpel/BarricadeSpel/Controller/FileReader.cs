@@ -13,7 +13,7 @@ namespace BarricadeSpel.Controller
          * Reads all lines in a file.
          * @param domain: The domain name of the file.
          */
-        public static void Read(string domain, ViewController viewController)
+        public static void Read(string domain, MainController mainController)
         {
             string[] lines = System.IO.File.ReadAllLines(domain);
             string[,] characters = new string[lines[0].Length, lines.Length];
@@ -38,7 +38,7 @@ namespace BarricadeSpel.Controller
 
             Model.Field[,] fields = new Model.Field[(numLines + 1) / 2, (numChars / 4) - 1];
 
-            viewController.MakeGrid((numLines + 1) / 2, (numChars / 4) - 1);
+            mainController.MakeGrid((numLines + 1) / 2, (numChars / 4) - 1);
 
             for (int i = 0; i < numLines; i++)
             {
@@ -71,7 +71,7 @@ namespace BarricadeSpel.Controller
                                 {
                                     exitN = fields[j - 1, (i / 2) - 1];
                                 }
-                                viewController.DrawField("LinkUp", j - 1, (i / 2));
+                                mainController.DrawField("LinkUp", j - 1, (i / 2));
                             }
                         }
 
@@ -81,7 +81,7 @@ namespace BarricadeSpel.Controller
                             {
                                 Debug.WriteLine("ExitW found");
                                 exitW = fields[j - 2, (i/2)];
-                                viewController.DrawField("LinkLeft", j - 1, (i / 2));
+                                mainController.DrawField("LinkLeft", j - 1, (i / 2));
                             }
                         }
 
@@ -90,38 +90,38 @@ namespace BarricadeSpel.Controller
                             case "<":
                                 if (characters[(j * 4) + 1, i] == " ") //goal
                                 {
-                                    fields[j - 1, (i/2)] = new Model.GoalField(exitN, null, null, exitW);
-                                    viewController.DrawField("GoalField", j - 1, (i / 2));
+                                    fields[j - 1, (i / 2)] = new Model.GoalField(exitN, null, null, exitW, j - 1, (i / 2));
+                                    mainController.DrawField("GoalField", j - 1, (i / 2));
                                     break;
                                 }
                                 int numForest;
                                 if (int.TryParse(characters[(j * 4) + 1, i], out numForest)) //forest
                                 {
-                                    fields[j - 1, (i/2)] = new Model.Forest(exitN, null, null, exitW, numForest);
-                                    viewController.DrawField("Forest", j - 1, (i / 2));
+                                    fields[j - 1, (i / 2)] = new Model.Forest(exitN, null, null, exitW, numForest, j - 1, (i / 2));
+                                    mainController.DrawField("Forest", j - 1, (i / 2));
                                     break;
                                 }
                                 //else startfield
-                                fields[j - 1, (i / 2)] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i]);
-                                viewController.DrawField("StartField", j - 1, (i / 2));
+                                fields[j - 1, (i / 2)] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i], j - 1, (i / 2));
+                                mainController.DrawField("StartField", j - 1, (i / 2));
                                 break;
                             case "(":
-                                fields[j - 1, (i / 2)] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo);
-                                viewController.DrawField("Field", j - 1, (i / 2));
+                                fields[j - 1, (i / 2)] = new Model.Field(exitN, null, null, exitW, barricadeAllowed, returnTo, j - 1, (i / 2));
+                                mainController.DrawField("Field", j - 1, (i / 2));
                                 break;
                             case "[":
-                                fields[j - 1, (i / 2)] = new Model.BarricadeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
-                                viewController.DrawField("BarricadeField", j - 1, (i / 2));
+                                fields[j - 1, (i / 2)] = new Model.BarricadeField(exitN, null, null, exitW, barricadeAllowed, returnTo, j - 1, (i / 2));
+                                mainController.DrawField("BarricadeField", j - 1, (i / 2));
                                 break;
                             case "{":
-                                fields[j - 1, (i / 2)] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo);
-                                viewController.DrawField("SafeField", j - 1, (i / 2));
+                                fields[j - 1, (i / 2)] = new Model.SafeField(exitN, null, null, exitW, barricadeAllowed, returnTo, j - 1, (i / 2));
+                                mainController.DrawField("SafeField", j - 1, (i / 2));
                                 break;
                             case " ":
                                 if (characters[(j * 4) + 1, i] == "|")
                                 {
                                     //fields[j - 1, (i / 2)] = new Model.LinkField(exitN, null, null, exitW);
-                                    viewController.DrawField("LinkField", j - 1, (i / 2));
+                                    mainController.DrawField("LinkField", j - 1, (i / 2));
                                 }
                                 break;
                         }
@@ -135,16 +135,12 @@ namespace BarricadeSpel.Controller
                             case "Y":
                             case "G":
                             case "B":
-                                new Model.Pawn(fields[j - 1, (i / 2)], characters[(j * 4) + 1, i]);
+                                mainController.MakePawn(characters[(j * 4) + 1, i], fields[j - 1, (i / 2)]);
                                 break;
                         }
-
-                        //TODO pionnen aan spelers linken IPV alleen velden
-
                     }
                 }
             }
-        
         }
 
 

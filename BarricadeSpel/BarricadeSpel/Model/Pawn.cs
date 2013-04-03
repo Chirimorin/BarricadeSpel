@@ -9,14 +9,11 @@ namespace BarricadeSpel.Model
 {
     class Pawn : Movable
     {
-        public String Color { get; set; }
-
-        public Pawn(Field position, String color)
+        public Pawn(Field position)
         {
             this.Position = position;
-            this.Color = color;
+
             this.Type = "pawn";
-            Debug.WriteLine("Pawn made, color: " + color);
         }
 
         // Returns the pawn to its designated position, if it were to be removed.

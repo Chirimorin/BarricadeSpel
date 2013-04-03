@@ -8,8 +8,8 @@ namespace BarricadeSpel.Model
 {
     class GoalField : Field
     {
-        public GoalField(Field exitN, Field exitE, Field exitS, Field exitW)
-            : base(exitN, exitE, exitS, exitW, false, 0)
+        public GoalField(Field exitN, Field exitE, Field exitS, Field exitW, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             
         }

@@ -11,8 +11,8 @@ namespace BarricadeSpel.Model
         public int NumForest { get; set; }
         private new List<Movable> _contains;
 
-        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, int numForest)
-            : base(exitN, exitE, exitS, exitW, false, 0)
+        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, int numForest, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             NumForest = numForest;
             _contains = new List<Movable>();
