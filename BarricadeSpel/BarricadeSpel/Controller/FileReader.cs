@@ -63,17 +63,25 @@ namespace BarricadeSpel.Controller
                             if (characters[(j * 4) + 1, i - 1] == "|")
                             {
                                 Debug.WriteLine("ExitN found");
-
-                                exitN = fields[j - 1, (i/2) - 1];
+                                if (characters[(j * 4) + 1, i] == "|") //linkfields unnodig maken? test!
+                                {
+                                    exitN = fields[j - 1, (i / 2) - 2];
+                                }
+                                else
+                                {
+                                    exitN = fields[j - 1, (i / 2) - 1];
+                                }
+                                viewController.DrawField("LinkUp", j - 1, (i / 2));
                             }
                         }
 
-                        if (j != 1)
+                        if (j > 1)
                         {
                             if (characters[(j * 4) - 1, i] == "-")
                             {
                                 Debug.WriteLine("ExitW found");
                                 exitW = fields[j - 2, (i/2)];
+                                viewController.DrawField("LinkLeft", j - 1, (i / 2));
                             }
                         }
 
@@ -112,7 +120,7 @@ namespace BarricadeSpel.Controller
                             case " ":
                                 if (characters[(j * 4) + 1, i] == "|")
                                 {
-                                    fields[j - 1, (i / 2)] = new Model.LinkField(exitN, null, null, exitW);
+                                    //fields[j - 1, (i / 2)] = new Model.LinkField(exitN, null, null, exitW);
                                     viewController.DrawField("LinkField", j - 1, (i / 2));
                                 }
                                 break;

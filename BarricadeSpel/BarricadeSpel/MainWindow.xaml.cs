@@ -31,7 +31,7 @@ namespace BarricadeSpel
             ViewController = viewController;
             InitializeComponent();
 
-            MainGrid.SizeChanged += SizeChangedHandler;
+            //MainGrid.SizeChanged += SizeChangedHandler;
             this.Show();
         }
 
@@ -68,27 +68,12 @@ namespace BarricadeSpel
                 case "GoalField":
                 case "BarricadeField":
                     Ellipse myCircle = new Ellipse();
-                    myCircle.StrokeThickness = 5;
+                    myCircle.StrokeThickness = CellSize/5;
                     myCircle.Stroke = Brushes.Transparent;
                     myCircle.HorizontalAlignment = HorizontalAlignment.Stretch;
                     myCircle.VerticalAlignment = VerticalAlignment.Stretch;
                     myCircle.SetValue(Grid.ColumnProperty, x);
                     myCircle.SetValue(Grid.RowProperty, y);
-                    Line myHorizontalLine = new Line();
-                    myHorizontalLine.StrokeThickness = 5;
-                    myHorizontalLine.Stroke = Brushes.Black;
-                    myHorizontalLine.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    myHorizontalLine.VerticalAlignment = VerticalAlignment.Center;
-                    myHorizontalLine.SetValue(Grid.ColumnProperty, x);
-                    myHorizontalLine.SetValue(Grid.RowProperty, y);
-                    Line myVerticalLine = new Line();
-                    myVerticalLine.StrokeThickness = 5;
-                    myVerticalLine.Stroke = Brushes.Black;
-                    myVerticalLine.HorizontalAlignment = HorizontalAlignment.Center;
-                    myVerticalLine.VerticalAlignment = VerticalAlignment.Stretch;
-                    myVerticalLine.SetValue(Grid.ColumnProperty, x);
-                    myVerticalLine.SetValue(Grid.RowProperty, y);
-
 
                     switch (type)
                     {
@@ -110,11 +95,47 @@ namespace BarricadeSpel
                         case "BarricadeField":
                             myCircle.Fill = System.Windows.Media.Brushes.Red;
                             break;
-                        case "LinkField":
-                            myHorizontalLine.Fill = Brushes.Black;
-                            break;
                     }
                     SpelGrid.Children.Add(myCircle);
+                    break;
+                case "LinkField":
+                case "LinkLeft":
+                case "LinkUp":
+                    Line myLine = new Line();
+                    myLine.StrokeThickness = 5;
+                    myLine.Stroke = Brushes.Black;
+                    myLine.SetValue(Grid.ColumnProperty, x);
+                    myLine.SetValue(Grid.RowProperty, y);
+                    switch (type)
+                    {
+                        case "LinkField":
+                            myLine.HorizontalAlignment = HorizontalAlignment.Center;
+                            myLine.VerticalAlignment = VerticalAlignment.Top;
+                            myLine.X1 = 2;
+                            myLine.X2 = 2;
+                            myLine.Y1 = 0;
+                            myLine.Y2 = CellSize;
+                            break;
+                        case "LinkLeft":
+                            myLine.HorizontalAlignment = HorizontalAlignment.Left;
+                            myLine.VerticalAlignment = VerticalAlignment.Center;
+                            myLine.X1 = -(CellSize / 5)+3;
+                            myLine.X2 = (CellSize / 5)-3;
+                            myLine.Y1 = 2;
+                            myLine.Y2 = 2;
+                            break;
+                        case "LinkUp":
+                            myLine.HorizontalAlignment = HorizontalAlignment.Center;
+                            myLine.VerticalAlignment = VerticalAlignment.Top;
+                            myLine.X1 = 2;
+                            myLine.X2 = 2;
+                            myLine.Y1 = -(CellSize / 5)+3;
+                            myLine.Y2 = (CellSize / 5)-3;
+                            break;
+                    }
+                    SpelGrid.Children.Add(myLine);
+                    break;
+
                 case "Forest":
                     //TODO teken forest
                     break;
@@ -123,8 +144,9 @@ namespace BarricadeSpel
 
         public void MakeGrid(object sender, EventArgs e)
         {
+            ClearGrid();
             MyEventArgs.MakeGridArgs makeGridArgs = (MyEventArgs.MakeGridArgs)e;
-
+            
             //X en Y zijn aantal vakjes, size wordt bepaald door het scherm. 
             int x = makeGridArgs.X;
             int y = makeGridArgs.Y;
@@ -148,6 +170,13 @@ namespace BarricadeSpel
             }
 
             SpelGrid.ShowGridLines = false;
+        }
+
+        public void ClearGrid()
+        {
+            SpelGrid.Children.Clear();
+            SpelGrid.ColumnDefinitions.Clear();
+            SpelGrid.RowDefinitions.Clear();
         }
 
         private void findCellSize(int nRows, int nCols)
