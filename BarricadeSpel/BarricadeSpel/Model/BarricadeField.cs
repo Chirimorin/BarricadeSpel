@@ -8,6 +8,7 @@ namespace BarricadeSpel.Model
 {
     class BarricadeField : Field
     {
+        //Constructor
         public BarricadeField(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo, int xPos, int yPos)
             : base(exitN, exitE, exitS, exitW, barricadeAllowed, returnTo, xPos, yPos)
         {

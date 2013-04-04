@@ -26,6 +26,7 @@ namespace BarricadeSpel.Model
 
         public string Type { get; set; }
 
+        //Functions
         public void MoveTo(Field field) //TODO return hit pawn, let player move barricade
         {
             Barricade barricade = null;

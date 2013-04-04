@@ -132,6 +132,7 @@ namespace BarricadeSpel.Model
         public bool BarricareAllowed { get; private set; }
         public int ReturnTo { get; private set; } //index of the forest to return to, 0 for start
 
+        //Constructor
         public Field(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo, int xPos, int yPos)
         {
             this.XPos = xPos;
@@ -151,17 +152,19 @@ namespace BarricadeSpel.Model
             Debug.WriteLine("");
         }
 
-        public bool CanMoveTo(string type)
-        {
-            return true;
-        }
-
+        
+        //Functions
         public bool CanMoveOver()
         {
             if (Contains != null)
                 if (Contains.Type == "barricade")
                     return false;
 
+            return true;
+        }
+
+        public bool CanMoveTo(string type)
+        {
             return true;
         }
 

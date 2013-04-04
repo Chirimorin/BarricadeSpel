@@ -22,6 +22,7 @@ namespace BarricadeSpel
     {
         private Controller.ViewController ViewController { get; set; }
 
+        //Constructor
         public TextView(Controller.ViewController viewController)
         {
             ViewController = viewController;
@@ -29,15 +30,31 @@ namespace BarricadeSpel
             this.Show();
         }
 
+        //Input handling
+
+
+        //Output functions
         public void DrawField(object sender, EventArgs e)
         {
             MyEventArgs.DrawFieldArgs drawFieldArgs = (MyEventArgs.DrawFieldArgs)e;
             string type = drawFieldArgs.Type;
-            int x = drawFieldArgs.X;
-            int y = drawFieldArgs.Y;
+            int x = drawFieldArgs.XPos;
+            int y = drawFieldArgs.YPos;
 
             Debug.WriteLine("Draw field text, Type: " + type + ", X: " + x + ", Y: " + y + ".");
-            //TODO veld tekenen.
+            //TODO draw field.
+        }
+
+        public void DrawMovable(object sender, EventArgs e)
+        {
+            MyEventArgs.DrawMovableArgs drawMovableArgs = (MyEventArgs.DrawMovableArgs)e;
+
+            string type = drawMovableArgs.Type;
+            string color = drawMovableArgs.Color;
+            int xPos = drawMovableArgs.XPos;
+            int yPos = drawMovableArgs.YPos;
+
+            //TODO draw the movable
         }
 
         public void MakeGrid(object sender, EventArgs e)
@@ -47,7 +64,10 @@ namespace BarricadeSpel
             int y = makeGridArgs.Y;
 
             Debug.WriteLine("Make Grid text, X: " + x + ", Y: " + y + ".");
-            //TODO grid aanmaken.
+            //TODO Make grid.
         }
+
+        //Other functions
+
     }
 }

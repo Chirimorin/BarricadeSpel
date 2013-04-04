@@ -10,18 +10,21 @@ namespace BarricadeSpel.Model
     {
         public string Color { get; set; } //Letter representation of the color.
 
+
+        //Constructor
         public StartField(Field exitN, Field exitE, Field exitS, Field exitW, string color, int xPos, int yPos)
             : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             Color = color.ToUpper();
         }
 
-        public new bool CanMoveTo(string type)
+        //Functions
+        public new bool CanMoveOver()
         {
             return false;
         }
 
-        public new bool CanMoveOver()
+        public new bool CanMoveTo(string type)
         {
             return false;
         }

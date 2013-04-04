@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BarricadeSpel.Model
 {
-    class LinkField : Field
+    class LinkField : Field //TODO: remove this. Only needed for drawing. 
     {
         //A link to make fields link together with more distance. 
         //Moving to it is impossible since it's not a real field. 
@@ -15,18 +15,21 @@ namespace BarricadeSpel.Model
 
         public new Movable Contains { get { Debug.WriteLine("Attempt to call get contains on LinkField"); return null; } set { Debug.WriteLine("Attempt to call set contains on LinkField"); } }
 
+        //Constructor
         public LinkField(Field exitN, Field exitE, Field exitS, Field exitW, int xPos, int yPos)
             : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             Debug.WriteLine("LINKFIELD MADE!");
         }
 
-        public new bool CanMoveTo(string type) //TODO update logic to pass through to next object. 
+
+        //Field
+        public new bool CanMoveOver() //TODO update logic to pass through to next object. 
         {
             return false;
         }
 
-        public new bool CanMoveOver() //TODO update logic to pass through to next object. 
+        public new bool CanMoveTo(string type) //TODO update logic to pass through to next object. 
         {
             return false;
         }

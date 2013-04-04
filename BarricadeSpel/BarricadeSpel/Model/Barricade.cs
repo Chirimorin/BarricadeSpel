@@ -9,6 +9,7 @@ namespace BarricadeSpel.Model
 {
     class Barricade : Movable
     {
+        //Constructor
         public Barricade(Field position)
         {
             Position = position;

@@ -11,6 +11,8 @@ namespace BarricadeSpel.MyEventArgs
         public int X { get; set; }
         public int Y { get; set; }
 
+
+        //Constructor
         public MakeGridArgs(int x, int y) 
         {
             X = x;

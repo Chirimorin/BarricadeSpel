@@ -11,12 +11,14 @@ namespace BarricadeSpel.Model
         public bool IsPlayer { get; set; } //true = speler, false = AI
         public List<Model.Pawn> Pawns { get; set; }
 
+        //Constructor
         public Player(bool isPlayer)
         {
             this.IsPlayer = isPlayer;
             Pawns = new List<Pawn>();
         }
 
+        //Functions
         public void AddPawn(Field position)
         {
             Pawns.Add(new Pawn(position));

@@ -13,12 +13,15 @@ namespace BarricadeSpel.Controller
         private ViewController viewController { get; set; }
         private MovableController movableController { get; set; }
 
+
+        //Constructor
         public MainController()
         {
             viewController = new ViewController(this);
             movableController = new MovableController(this);
         }
 
+        //Functions
         public void LoadFile()
         {
             System.Reflection.Assembly thisExe = System.Reflection.Assembly.GetExecutingAssembly();
@@ -40,10 +43,20 @@ namespace BarricadeSpel.Controller
         }
 
 
-        //Rerouting functions to appropriate controllers.
+        //Rerouting Functions
+        public void DoneLoading()
+        {
+            viewController.DoneLoading();
+        }
+
         public void DrawField(string type, int x, int y)
         {
             viewController.DrawField(type, x, y);
+        }
+
+        public void MakeBarricade(Model.Field position)
+        {
+            movableController.MakeBarricade(position);
         }
 
         public void MakeGrid(int x, int y)
@@ -54,11 +67,6 @@ namespace BarricadeSpel.Controller
         public void MakePawn(string color, Model.Field position)
         {
             movableController.MakePawn(color, position);
-        }
-
-        public void MakeBarricade(Model.Field position)
-        {
-            movableController.MakeBarricade(position);
         }
 
     }

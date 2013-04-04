@@ -9,10 +9,7 @@ namespace BarricadeSpel.Controller
 {
     class FileReader
     {
-        /**
-         * Reads all lines in a file.
-         * @param domain: The domain name of the file.
-         */
+        //Functions
         public static void Read(string domain, MainController mainController)
         {
             string[] lines = System.IO.File.ReadAllLines(domain);
@@ -63,7 +60,7 @@ namespace BarricadeSpel.Controller
                             if (characters[(j * 4) + 1, i - 1] == "|")
                             {
                                 Debug.WriteLine("ExitN found");
-                                if (characters[(j * 4) + 1, i] == "|") //linkfields unnodig maken? test!
+                                if (characters[(j * 4) + 1, i] == "|") //linkfields unnodig maken? TODO test dit!
                                 {
                                     exitN = fields[j - 1, (i / 2) - 2];
                                 }
@@ -141,8 +138,7 @@ namespace BarricadeSpel.Controller
                     }
                 }
             }
+            //TODO DoneLoading call die movables tekent. 
         }
-
-
     }
 }

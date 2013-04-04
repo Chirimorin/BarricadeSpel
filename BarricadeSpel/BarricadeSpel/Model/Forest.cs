@@ -11,13 +11,6 @@ namespace BarricadeSpel.Model
         public int NumForest { get; set; }
         private new List<Movable> _contains;
 
-        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, int numForest, int xPos, int yPos)
-            : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
-        {
-            NumForest = numForest;
-            _contains = new List<Movable>();
-        }
-
         public new Movable Contains //TODO fix setter
         {
             get { return null; }
@@ -35,14 +28,25 @@ namespace BarricadeSpel.Model
             }
         }
 
+        //Constructor
+        public Forest(Field exitN, Field exitE, Field exitS, Field exitW, int numForest, int xPos, int yPos)
+            : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
+        {
+            NumForest = numForest;
+            _contains = new List<Movable>();
+        }
+
+
+        //Functions
+        public new bool CanMoveOver()
+        {
+            return false;
+        }
+
         public new bool CanMoveTo(string type)
         {
             return false;
         }
 
-        public new bool CanMoveOver()
-        {
-            return false;
-        }
     }
 }

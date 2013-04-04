@@ -55,6 +55,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\FileReader.cs" />
     <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\MovableController.cs" />
     <Compile Include="Controller\ViewController.cs" />
     <Compile Include="MyEventArgs\DrawFieldArgs.cs" />
     <Compile Include="Model\Barricade.cs" />

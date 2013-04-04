@@ -10,15 +10,18 @@ namespace BarricadeSpel.Controller
 {
     public class ViewController
     {
-        //TODO aantal windows bijhouden en sluiten van het programma daarop samen laten werken. --> Thomas
+        //TODO aantal windows bijhouden en sluiten van het programma daarop samen laten werken.
 
 
         private Controller.MainController MainController;
 
         public event EventHandler drawField;
         public event EventHandler makeGrid;
+        public event EventHandler drawMovable;
         //TODO eventhandlers maken voor andere events (zoals verplaats pion/barricade)
 
+
+        //Constructor
         public ViewController(Controller.MainController mainController)
         {
             MainController = mainController;
@@ -27,6 +30,8 @@ namespace BarricadeSpel.Controller
             //OpenView("text");
         }
 
+
+        //Functions
         public void OpenView(string type)
         {
             if (type == "text")
@@ -35,6 +40,7 @@ namespace BarricadeSpel.Controller
 
                 drawField += textView.DrawField;
                 makeGrid += textView.MakeGrid;
+                drawMovable += textView.DrawMovable;
                 //TODO extra eventhandlers linken
             }
 
@@ -44,14 +50,17 @@ namespace BarricadeSpel.Controller
 
                 drawField += mainWindow.DrawField;
                 makeGrid += mainWindow.MakeGrid;
+                drawMovable += mainWindow.DrawMovable;
                 //TODO extra eventhandlers linken
             }
 
         }
 
-        public void LoadFile()
+
+        //Output functions
+        public void DoneLoading()
         {
-            MainController.LoadFile();
+
         }
 
         public void DrawField(string type, int x, int y)
@@ -72,8 +81,11 @@ namespace BarricadeSpel.Controller
             }
         }
 
-        //TODO extra events firen bij andere events. 
 
-
+        //Input functions
+        public void LoadFile()
+        {
+            MainController.LoadFile();
+        }
     }
 }

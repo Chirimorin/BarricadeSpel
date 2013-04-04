@@ -8,24 +8,27 @@ namespace BarricadeSpel.Model
 {
     class GoalField : Field
     {
+        public new Movable Contains
+        {
+            set
+            {
+                _contains = value;
+                FinishGame();
+            }
+        }
+
+        //Constructor
         public GoalField(Field exitN, Field exitE, Field exitS, Field exitW, int xPos, int yPos)
             : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             
         }
 
-        public new Movable Contains
-        {
-            set 
-            {
-                _contains = value;
-                FinishGame(); 
-            }
-        }
 
-        private void FinishGame() //TODO make whole function
+        //Functions
+        public new bool CanMoveOver()
         {
-            //finish game logic
+            return false;
         }
 
         public new bool CanMoveTo(string type)
@@ -35,9 +38,11 @@ namespace BarricadeSpel.Model
             return true;
         }
 
-        public new bool CanMoveOver()
+        private void FinishGame() //TODO make whole function
         {
-            return false;
+            //finish game logic
         }
+
+
     }
 }

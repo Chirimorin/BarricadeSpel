@@ -17,6 +17,8 @@ namespace BarricadeSpel.Controller
 
         public List<Model.Barricade> Barricades { get; set; }
 
+
+        //Constructor
         public MovableController(MainController mainController)
         {
             this.MainController = mainController;
@@ -25,6 +27,13 @@ namespace BarricadeSpel.Controller
             PlayerG = new Model.Player(true);
             PlayerY = new Model.Player(true);
             PlayerB = new Model.Player(true);
+        }
+
+
+        //Functions
+        public void MakeBarricade(Model.Field position)
+        {
+            Barricades.Add(new Model.Barricade(position));
         }
 
         public void MakePawn(string color, Model.Field position)
@@ -45,12 +54,5 @@ namespace BarricadeSpel.Controller
                     break;
             }
         }
-
-        public void MakeBarricade(Model.Field position)
-        {
-            Barricades.Add(new Model.Barricade(position));
-        }
-
-
     }
 }

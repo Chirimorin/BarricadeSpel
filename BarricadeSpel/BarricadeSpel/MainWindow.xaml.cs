@@ -26,23 +26,25 @@ namespace BarricadeSpel
         private Controller.ViewController ViewController { get; set; }
         private int CellSize { get; set; }
 
+
+        //Constructor
         public MainWindow(Controller.ViewController viewController)
         {
             ViewController = viewController;
             InitializeComponent();
-
-            //MainGrid.SizeChanged += SizeChangedHandler;
             this.Show();
+        }
+
+
+        //Input handling
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void OpenItem_Click(object sender, RoutedEventArgs e)
         {
             ViewController.LoadFile();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
@@ -51,12 +53,21 @@ namespace BarricadeSpel
             ViewController.DrawField("Field", 1, 2);
         }
 
+
+        //Output functions
+        public void ClearGrid()
+        {
+            SpelGrid.Children.Clear();
+            SpelGrid.ColumnDefinitions.Clear();
+            SpelGrid.RowDefinitions.Clear();
+        }
+        
         public void DrawField(object sender, EventArgs e)
         {
             MyEventArgs.DrawFieldArgs drawFieldArgs = (MyEventArgs.DrawFieldArgs)e;
             string type = drawFieldArgs.Type;
-            int x = drawFieldArgs.X;
-            int y = drawFieldArgs.Y;
+            int x = drawFieldArgs.XPos;
+            int y = drawFieldArgs.YPos;
 
             Debug.WriteLine("Draw field main, Type: " + type + ", X: " + x + ", Y: " + y + ".");
 
@@ -142,6 +153,18 @@ namespace BarricadeSpel
             }
         }
 
+        public void DrawMovable(object sender, EventArgs e)
+        {
+            MyEventArgs.DrawMovableArgs drawMovableArgs = (MyEventArgs.DrawMovableArgs)e;
+
+            string type = drawMovableArgs.Type;
+            string color = drawMovableArgs.Color;
+            int xPos = drawMovableArgs.XPos;
+            int yPos = drawMovableArgs.YPos;
+
+            //TODO draw the movable
+        }
+
         public void MakeGrid(object sender, EventArgs e)
         {
             ClearGrid();
@@ -153,7 +176,7 @@ namespace BarricadeSpel
 
             Debug.WriteLine("Make Grid main, X: " + x + ", Y: " + y + ".");
 
-            findCellSize(y, x);
+            FindCellSize(y, x);
 
             for (int i = 0; i < x; i++)
             {
@@ -172,14 +195,9 @@ namespace BarricadeSpel
             SpelGrid.ShowGridLines = false;
         }
 
-        public void ClearGrid()
-        {
-            SpelGrid.Children.Clear();
-            SpelGrid.ColumnDefinitions.Clear();
-            SpelGrid.RowDefinitions.Clear();
-        }
 
-        private void findCellSize(int nRows, int nCols)
+        //Other functions
+        private void FindCellSize(int nRows, int nCols)
         {
             double w = MainGrid.ActualWidth;
             double h = MainGrid.ActualHeight - 76;
@@ -204,22 +222,6 @@ namespace BarricadeSpel
             }
         }
 
-        private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
-        {
-            RowDefinition[] rows = SpelGrid.RowDefinitions.ToArray();
-            ColumnDefinition[] columns = SpelGrid.ColumnDefinitions.ToArray();
 
-            findCellSize(SpelGrid.RowDefinitions.Count, SpelGrid.ColumnDefinitions.Count);
-
-            foreach (RowDefinition row in rows)
-            {
-                row.Height = new GridLength(CellSize);
-            }
-
-            foreach (ColumnDefinition column in columns)
-            {
-                column.Width = new GridLength(CellSize);
-            }
-        }
     }
 }

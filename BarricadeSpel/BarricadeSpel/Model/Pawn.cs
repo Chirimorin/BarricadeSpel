@@ -9,6 +9,7 @@ namespace BarricadeSpel.Model
 {
     class Pawn : Movable
     {
+        //Constructor
         public Pawn(Field position)
         {
             this.Position = position;
@@ -16,20 +17,13 @@ namespace BarricadeSpel.Model
             this.Type = "pawn";
         }
 
-        // Returns the pawn to its designated position, if it were to be removed.
-        private void returnPawn()
+        //Functions
+        private void returnPawn() //Returns the pawn to appropriate position when it's hit. 
         {
             //if (Position.ReturnTo == 0)
             //    Position = 0;//beginning
             //if (Position.ReturnTo == 1)
             //    Position = 10;//forest
-        }
-
-        // Finishes the game
-        private void finishGame() //Done by GoalField?
-        {
-            //if (Position == 100)//finish
-            //    Console.WriteLine("Gefeliciteerd " + Color + "! Je hebt gewonnen!");
         }
     }
 }
