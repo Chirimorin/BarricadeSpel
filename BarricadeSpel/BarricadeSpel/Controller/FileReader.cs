@@ -126,7 +126,7 @@ namespace BarricadeSpel.Controller
                         switch (characters[(j * 4) + 1, i])
                         {
                             case "*":
-                                new Model.Barricade(fields[j - 1, (i / 2)]);
+                                mainController.MakeBarricade(fields[j - 1, (i / 2)]);
                                 break;
                             case "R":
                             case "Y":
@@ -138,7 +138,8 @@ namespace BarricadeSpel.Controller
                     }
                 }
             }
-            //TODO DoneLoading call die movables tekent. 
+
+            mainController.DrawAllMovables();
         }
     }
 }

@@ -34,6 +34,11 @@ namespace BarricadeSpel
 
 
         //Output functions
+        public void DoneLoading(object sender, EventArgs e)
+        {
+
+        }
+
         public void DrawField(object sender, EventArgs e)
         {
             MyEventArgs.DrawFieldArgs drawFieldArgs = (MyEventArgs.DrawFieldArgs)e;
@@ -65,6 +70,11 @@ namespace BarricadeSpel
 
             Debug.WriteLine("Make Grid text, X: " + x + ", Y: " + y + ".");
             //TODO Make grid.
+        }
+
+        public void StartLoading(object sender, EventArgs e)
+        {
+
         }
 
         //Other functions

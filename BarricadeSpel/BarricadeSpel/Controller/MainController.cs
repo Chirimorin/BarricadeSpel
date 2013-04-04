@@ -38,20 +38,28 @@ namespace BarricadeSpel.Controller
 
             if (result == true)
             {
+                viewController.StartLoading();
+                movableController.ClearMovables();
                 Controller.FileReader.Read(dialog.FileName, this);
+                viewController.DoneLoading();
             }
         }
 
 
         //Rerouting Functions
-        public void DoneLoading()
+        public void DrawAllMovables()
         {
-            viewController.DoneLoading();
+            movableController.DrawAllMovables();
         }
 
         public void DrawField(string type, int x, int y)
         {
             viewController.DrawField(type, x, y);
+        }
+
+        public void DrawMovable(string type, string color, int xPos, int yPos)
+        {
+            viewController.DrawMovable(type, color, xPos, yPos);
         }
 
         public void MakeBarricade(Model.Field position)

@@ -26,6 +26,8 @@ namespace BarricadeSpel
         private Controller.ViewController ViewController { get; set; }
         private int CellSize { get; set; }
 
+        private List<PawnDrawing> Pawns { get; set; }
+        private List<BarricadeDrawing> Barricades { get; set; }
 
         //Constructor
         public MainWindow(Controller.ViewController viewController)
@@ -33,6 +35,8 @@ namespace BarricadeSpel
             ViewController = viewController;
             InitializeComponent();
             this.Show();
+            Pawns = new List<PawnDrawing>();
+            Barricades = new List<BarricadeDrawing>();
         }
 
 
@@ -55,11 +59,16 @@ namespace BarricadeSpel
 
 
         //Output functions
-        public void ClearGrid()
+        private void ClearGrid()
         {
             SpelGrid.Children.Clear();
             SpelGrid.ColumnDefinitions.Clear();
             SpelGrid.RowDefinitions.Clear();
+        }
+
+        public void DoneLoading(object sender, EventArgs e)
+        {
+            LabelMessage.Content = "Done";
         }
         
         public void DrawField(object sender, EventArgs e)
@@ -162,7 +171,25 @@ namespace BarricadeSpel
             int xPos = drawMovableArgs.XPos;
             int yPos = drawMovableArgs.YPos;
 
-            //TODO draw the movable
+            Debug.WriteLine("Draw Movable, type: " + type + " Color: " + color);
+
+            if (type == "pawn")
+            {
+                PawnDrawing newPawn = new PawnDrawing(color, CellSize);
+                newPawn.XPos = xPos;
+                newPawn.YPos = yPos;
+                Pawns.Add(newPawn);
+                SpelGrid.Children.Add(newPawn.MyCanvas);
+            }
+
+            if (type == "barricade")
+            {
+                BarricadeDrawing newBarricade = new BarricadeDrawing(CellSize);
+                newBarricade.XPos = xPos;
+                newBarricade.YPos = yPos;
+                Barricades.Add(newBarricade);
+                SpelGrid.Children.Add(newBarricade.MyCanvas);
+            }
         }
 
         public void MakeGrid(object sender, EventArgs e)
@@ -195,6 +222,10 @@ namespace BarricadeSpel
             SpelGrid.ShowGridLines = false;
         }
 
+        public void StartLoading(object sender, EventArgs e)
+        {
+            LabelMessage.Content = "Loading...";
+        }
 
         //Other functions
         private void FindCellSize(int nRows, int nCols)
@@ -223,5 +254,120 @@ namespace BarricadeSpel
         }
 
 
+    }
+
+    public class PawnDrawing //Extra class for easy pawn management. 
+    {
+        public Ellipse Circle1 { get; set; }
+        public Ellipse Circle2 { get; set; }
+
+        public Canvas MyCanvas { get; set; }
+
+        public string Color { get; set; }
+
+        public int XPos
+        {
+            set
+            {
+                MyCanvas.SetValue(Grid.ColumnProperty, value);
+            }
+        }
+        public int YPos
+        {
+            set
+            {
+                MyCanvas.SetValue(Grid.RowProperty, value);
+            }
+        }
+
+        //Constructor
+        public PawnDrawing(string color, int cellSize)
+        {
+            Color = color;
+
+            MyCanvas = new Canvas();
+
+            Circle1 = new Ellipse();
+            Circle1.StrokeThickness = 2;
+            Circle1.Stroke = Brushes.Black;
+            Circle1.HorizontalAlignment = HorizontalAlignment.Left;
+            Circle1.VerticalAlignment = VerticalAlignment.Top;
+            Circle1.Width = cellSize - ((cellSize / 5) * 2);
+            Circle1.Height = cellSize - ((cellSize / 5) * 2);
+            MyCanvas.Children.Add(Circle1);
+            Canvas.SetLeft(Circle1, (cellSize / 5));
+            Canvas.SetTop(Circle1, (cellSize / 5));
+
+            Circle2 = new Ellipse();
+            Circle2.StrokeThickness = 2;
+            Circle2.Stroke = Brushes.Black;
+            Circle2.HorizontalAlignment = HorizontalAlignment.Left;
+            Circle2.VerticalAlignment = VerticalAlignment.Top;
+            Circle2.Width = Circle1.Width / 1.5;
+            Circle2.Height = Circle1.Height / 1.5;
+            MyCanvas.Children.Add(Circle2);
+            Canvas.SetLeft(Circle2, (cellSize / 5));
+            Canvas.SetTop(Circle2, (cellSize / 5));
+
+            switch (color)
+            {
+                case "R":
+                    Circle1.Fill = Brushes.Red;
+                    Circle2.Fill = Brushes.Red;
+                    break;
+                case "G":
+                    Circle1.Fill = Brushes.Green;
+                    Circle2.Fill = Brushes.Green;
+                    break;
+                case "Y":
+                    Circle1.Fill = Brushes.Yellow;
+                    Circle2.Fill = Brushes.Yellow;
+                    break;
+                case "B":
+                    Circle1.Fill = Brushes.Blue;
+                    Circle2.Fill = Brushes.Blue;
+                    break;
+            }
+        }
+    }
+
+    public class BarricadeDrawing //Extra class for easy barricade management. 
+    {
+        public Ellipse Circle { get; set; }
+
+        public Canvas MyCanvas { get; set; }
+
+        public int XPos
+        {
+            set
+            {
+                MyCanvas.SetValue(Grid.ColumnProperty, value);
+            }
+        }
+        public int YPos
+        {
+            set
+            {
+                MyCanvas.SetValue(Grid.RowProperty, value);
+            }
+        }
+
+        //Constructor
+        public BarricadeDrawing(int cellSize)
+        {
+            MyCanvas = new Canvas();
+
+            Circle = new Ellipse();
+            Circle.StrokeThickness = 2;
+            Circle.Stroke = Brushes.Black;
+            Circle.HorizontalAlignment = HorizontalAlignment.Left;
+            Circle.VerticalAlignment = VerticalAlignment.Top;
+            Circle.Fill = Brushes.White;
+            Circle.Width = cellSize - ((cellSize / 7) * 2);
+            Circle.Height = cellSize - ((cellSize / 7) * 2);
+            MyCanvas.Children.Add(Circle);
+            Canvas.SetLeft(Circle, (cellSize / 7));
+            Canvas.SetTop(Circle, (cellSize / 7));
+        }
     }
 }

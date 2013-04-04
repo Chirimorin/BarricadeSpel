@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BarricadeSpel.Model
 {
-    class Field
+    public class Field
     {
         protected Movable _contains;
 

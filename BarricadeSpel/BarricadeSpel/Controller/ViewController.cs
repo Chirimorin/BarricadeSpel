@@ -15,9 +15,11 @@ namespace BarricadeSpel.Controller
 
         private Controller.MainController MainController;
 
+        public event EventHandler doneLoading;
         public event EventHandler drawField;
         public event EventHandler makeGrid;
         public event EventHandler drawMovable;
+        public event EventHandler startLoading;
         //TODO eventhandlers maken voor andere events (zoals verplaats pion/barricade)
 
 
@@ -38,9 +40,12 @@ namespace BarricadeSpel.Controller
             {
                 TextView textView = new TextView(this);
 
+                doneLoading += textView.DoneLoading;
                 drawField += textView.DrawField;
-                makeGrid += textView.MakeGrid;
                 drawMovable += textView.DrawMovable;
+                makeGrid += textView.MakeGrid;
+                startLoading += textView.StartLoading;
+                
                 //TODO extra eventhandlers linken
             }
 
@@ -48,9 +53,12 @@ namespace BarricadeSpel.Controller
             {
                 MainWindow mainWindow = new MainWindow(this);
 
+                doneLoading += mainWindow.DoneLoading;
                 drawField += mainWindow.DrawField;
-                makeGrid += mainWindow.MakeGrid;
                 drawMovable += mainWindow.DrawMovable;
+                makeGrid += mainWindow.MakeGrid;
+                startLoading += mainWindow.StartLoading;
+
                 //TODO extra eventhandlers linken
             }
 
@@ -60,7 +68,11 @@ namespace BarricadeSpel.Controller
         //Output functions
         public void DoneLoading()
         {
-
+            EventHandler handler = doneLoading;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
 
         public void DrawField(string type, int x, int y)
@@ -78,6 +90,24 @@ namespace BarricadeSpel.Controller
             if (handler != null)
             {
                 handler(this, new MyEventArgs.MakeGridArgs(x, y));
+            }
+        }
+
+        public void DrawMovable(string type, string color, int xPos, int yPos)
+        {
+            EventHandler handler = drawMovable;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.DrawMovableArgs(type, color, xPos, yPos));
+            }
+        }
+
+        public void StartLoading()
+        {
+            EventHandler handler = startLoading;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
             }
         }
 

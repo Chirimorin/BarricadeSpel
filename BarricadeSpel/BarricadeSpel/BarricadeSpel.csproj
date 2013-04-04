@@ -69,6 +69,7 @@
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\SafeField.cs" />
     <Compile Include="Model\StartField.cs" />
+    <Compile Include="MyEventArgs\DrawMovableArgs.cs" />
     <Compile Include="MyEventArgs\MakeGridArgs.cs" />
     <Compile Include="TextView.xaml.cs">
       <DependentUpon>TextView.xaml</DependentUpon>

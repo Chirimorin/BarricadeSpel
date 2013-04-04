@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BarricadeSpel.Model
 {
-    class Movable
+    public class Movable
     {
         private Field _position;
         public Field Position 
