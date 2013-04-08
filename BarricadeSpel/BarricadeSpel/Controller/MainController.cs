@@ -11,7 +11,6 @@ namespace BarricadeSpel.Controller
     public class MainController
     {
         private ViewController ViewController { get; set; }
-        private MovableController MovableController { get; set; }
         private GameController GameController { get; set; }
 
 
@@ -19,11 +18,23 @@ namespace BarricadeSpel.Controller
         public MainController()
         {
             ViewController = new ViewController(this);
-            MovableController = new MovableController(this);
             GameController = new GameController(this);
         }
 
         //Functions
+        public void BroadcastMove(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Received possible field");
+
+            MyEventArgs.BroadcastMoveArgs broadcastMoveArgs = (MyEventArgs.BroadcastMoveArgs)e;
+            int xPos = broadcastMoveArgs.XPos;
+            int yPos = broadcastMoveArgs.YPos;
+            Model.Field field = broadcastMoveArgs.Field;
+
+            GameController.RegisterSelectableField(field);
+            OpenInput(xPos, yPos);
+        }
+
         public void LoadFile()
         {
             System.Reflection.Assembly thisExe = System.Reflection.Assembly.GetExecutingAssembly();
@@ -41,7 +52,7 @@ namespace BarricadeSpel.Controller
             if (result == true)
             {
                 ViewController.StartLoading();
-                MovableController.ClearMovables();
+                GameController.ClearMovables();
                 Controller.FileReader.Read(dialog.FileName, this);
                 ViewController.DoneLoading();
                 GameController.StartGame();
@@ -61,7 +72,7 @@ namespace BarricadeSpel.Controller
 
         public void DrawAllMovables()
         {
-            MovableController.DrawAllMovables();
+            GameController.DrawAllMovables();
         }
 
         public void DrawField(string type, int x, int y)
@@ -76,7 +87,7 @@ namespace BarricadeSpel.Controller
 
         public void MakeBarricade(Model.Field position)
         {
-            MovableController.MakeBarricade(position);
+            GameController.MakeBarricade(position);
         }
 
         public void MakeGrid(int x, int y)
@@ -86,7 +97,12 @@ namespace BarricadeSpel.Controller
 
         public void MakePawn(string color, Model.Field position)
         {
-            MovableController.MakePawn(color, position);
+            GameController.MakePawn(color, position);
+        }
+
+        public void MovePawn(int index, int newX, int newY)
+        {
+            ViewController.MovePawn(index, newX, newY);
         }
 
         public void NewTurn(string color)
@@ -99,9 +115,14 @@ namespace BarricadeSpel.Controller
             ViewController.OpenInput(xPos, yPos);
         }
 
+        public void InputSelected(int index)
+        {
+            GameController.InputSelected(index);
+        }
+
         public void PawnSelector(string color)
         {
-            MovableController.PawnSelector(color);
+            GameController.PawnSelector(color);
         }
 
         public void ResetInputs()

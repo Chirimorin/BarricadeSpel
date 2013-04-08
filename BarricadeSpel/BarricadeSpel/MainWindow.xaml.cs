@@ -56,7 +56,7 @@ namespace BarricadeSpel
             {
                 if (Inputs.ElementAt(i).Circle == sender)
                 {
-                    Debug.WriteLine("Input index " + i + " clicked!");
+                    ViewController.InputSelected(i);
                 }
                 i++;
             }
@@ -299,6 +299,18 @@ namespace BarricadeSpel
             }
 
             SpelGrid.ShowGridLines = false;
+        }
+
+        public void MovePawn(object sender, EventArgs e)
+        {
+            MyEventArgs.MovePawnArgs movePawnArgs = (MyEventArgs.MovePawnArgs)e;
+            int index = movePawnArgs.Index;
+            int newX = movePawnArgs.NewX;
+            int newY = movePawnArgs.NewY;
+
+            Pawns.ElementAt(index).XPos = newX;
+            Pawns.ElementAt(index).YPos = newY;
+
         }
 
         public void NewTurn(object sender, EventArgs e)

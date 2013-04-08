@@ -9,9 +9,32 @@ namespace BarricadeSpel.Model
 {
     public class Field
     {
+        public event EventHandler broadcastMove;
+
         protected Movable _contains;
 
-        public Movable Contains { get { return _contains; } set { Debug.WriteLine("Added movable to field"); _contains = value; } } //Updated by movable! Controllers don't need to touch this. 
+        public Movable Contains //Updated by movable! Controllers don't need to touch this. 
+        { 
+            get 
+            { 
+                return _contains; 
+            }
+            set 
+            {
+                if (_contains != null && value != null) //Only if the call is not by removing
+                {
+                    if (_contains.Type == "barricade")
+                    {
+                        Debug.WriteLine("Barricade hit!");
+                    }
+                    if (_contains.Type == "pawn")
+                    {
+                        Debug.WriteLine("pawn hit!");
+                    }
+                }
+                _contains = value;
+            }
+        } 
 
         protected Field _exitN;
         protected Field _exitE;
@@ -166,6 +189,44 @@ namespace BarricadeSpel.Model
         public bool CanMoveTo(string type)
         {
             return true;
+        }
+
+        public void BroadcastMove(int numSteps, Field comesFrom)
+        {
+            if (numSteps <= 0) //Pawn is trying to stop on this field. Allow if possible
+            {
+                EventHandler handler = broadcastMove;
+                if (handler != null)
+                {
+                    handler(this, new MyEventArgs.BroadcastMoveArgs(XPos, YPos, this));
+                }
+            }
+            else
+            {
+                numSteps--;
+                if (_contains == null || _contains.Type != "barricade")
+                {
+                    if (comesFrom != _exitN && _exitN != null)
+                    {
+                        _exitN.BroadcastMove(numSteps, this);
+                    }
+                    if (comesFrom != _exitE && _exitE != null)
+                    {
+                        _exitE.BroadcastMove(numSteps, this);
+                    }
+                    if (comesFrom != _exitS && _exitS != null)
+                    {
+                        _exitS.BroadcastMove(numSteps, this);
+                    }
+                    if (comesFrom != _exitW && _exitW != null)
+                    {
+                        _exitW.BroadcastMove(numSteps, this);
+                    }
+                }
+
+            }
+
+
         }
 
     }

@@ -24,10 +24,12 @@ namespace BarricadeSpel.Model
             } 
         }
 
+        public int DrawIndex { get; set; } //Useful for keeping track of which drawing belongs to which position. Views are expected to add drawings to a list starting at index 0 in order of drawing.
+
         public string Type { get; set; }
 
         //Functions
-        public void MoveTo(Field field) //TODO return hit pawn, let player move barricade
+        /*public void MoveTo(Field field) //TODO return hit pawn, let player move barricade
         {
             Barricade barricade = null;
             Pawn pawn = null;
@@ -47,6 +49,6 @@ namespace BarricadeSpel.Model
             {
                 //Let player move the barricade
             }
-        }
+        }*/
     }
 }

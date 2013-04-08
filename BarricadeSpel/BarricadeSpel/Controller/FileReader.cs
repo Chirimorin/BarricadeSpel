@@ -62,6 +62,7 @@ namespace BarricadeSpel.Controller
                                 Debug.WriteLine("ExitN found");
                                 if (characters[(j * 4) + 1, i] == "|") //linkfields unnodig maken? TODO test dit!
                                 {
+                                    Debug.WriteLine("EXITN 1 extra up!");
                                     exitN = fields[j - 1, (i / 2) - 2];
                                 }
                                 else
@@ -121,6 +122,11 @@ namespace BarricadeSpel.Controller
                                     mainController.DrawField("LinkField", j - 1, (i / 2));
                                 }
                                 break;
+                        }
+
+                        if (fields[j - 1, (i / 2)] != null)
+                        {
+                            fields[j - 1, (i / 2)].broadcastMove += mainController.BroadcastMove;
                         }
 
                         switch (characters[(j * 4) + 1, i])

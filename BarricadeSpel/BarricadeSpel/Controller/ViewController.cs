@@ -20,6 +20,7 @@ namespace BarricadeSpel.Controller
         public event EventHandler drawField;
         public event EventHandler drawMovable;
         public event EventHandler makeGrid;
+        public event EventHandler movePawn;
         public event EventHandler newTurn;
         public event EventHandler openInput;
         public event EventHandler resetInputs;
@@ -49,6 +50,7 @@ namespace BarricadeSpel.Controller
                 drawField += textView.DrawField;
                 drawMovable += textView.DrawMovable;
                 makeGrid += textView.MakeGrid;
+                movePawn += textView.MovePawn;
                 newTurn += textView.NewTurn;
                 openInput += textView.OpenInput;
                 resetInputs += textView.ResetInputs;
@@ -66,6 +68,7 @@ namespace BarricadeSpel.Controller
                 drawField += mainWindow.DrawField;
                 drawMovable += mainWindow.DrawMovable;
                 makeGrid += mainWindow.MakeGrid;
+                movePawn += mainWindow.MovePawn;
                 newTurn += mainWindow.NewTurn;
                 openInput += mainWindow.OpenInput;
                 resetInputs += mainWindow.ResetInputs;
@@ -123,6 +126,15 @@ namespace BarricadeSpel.Controller
             }
         }
 
+        public void MovePawn(int index, int newX, int newY)
+        {
+            EventHandler handler = movePawn;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.MovePawnArgs(index, newX, newY));
+            }
+        }
+
         public void NewTurn(string color)
         {
             EventHandler handler = newTurn;
@@ -164,6 +176,11 @@ namespace BarricadeSpel.Controller
         public void LoadFile()
         {
             MainController.LoadFile();
+        }
+
+        public void InputSelected(int index)
+        {
+            MainController.InputSelected(index);
         }
 
         public void RollDice()

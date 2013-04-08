@@ -56,9 +56,9 @@
     <Compile Include="Controller\FileReader.cs" />
     <Compile Include="Controller\GameController.cs" />
     <Compile Include="Controller\MainController.cs" />
-    <Compile Include="Controller\MovableController.cs" />
     <Compile Include="Controller\ViewController.cs" />
     <Compile Include="Model\Dice.cs" />
+    <Compile Include="MyEventArgs\BroadcastMoveArgs.cs" />
     <Compile Include="MyEventArgs\DiceRolledArgs.cs" />
     <Compile Include="MyEventArgs\DrawFieldArgs.cs" />
     <Compile Include="Model\Barricade.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Model\StartField.cs" />
     <Compile Include="MyEventArgs\DrawMovableArgs.cs" />
     <Compile Include="MyEventArgs\MakeGridArgs.cs" />
+    <Compile Include="MyEventArgs\MoveMovableArgs.cs" />
     <Compile Include="MyEventArgs\NewTurnArgs.cs" />
     <Compile Include="MyEventArgs\OpenInputArgs.cs" />
     <Compile Include="TextView.xaml.cs">
