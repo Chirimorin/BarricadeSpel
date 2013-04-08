@@ -28,6 +28,7 @@ namespace BarricadeSpel
 
         private List<PawnDrawing> Pawns { get; set; }
         private List<BarricadeDrawing> Barricades { get; set; }
+        private List<InputDrawing> Inputs { get; set; }
 
         //Constructor
         public MainWindow(Controller.ViewController viewController)
@@ -37,6 +38,7 @@ namespace BarricadeSpel
             this.Show();
             Pawns = new List<PawnDrawing>();
             Barricades = new List<BarricadeDrawing>();
+            Inputs = new List<InputDrawing>();
         }
 
 
@@ -46,15 +48,33 @@ namespace BarricadeSpel
             Close();
         }
 
+        private void Input_Click(object sender, EventArgs e)
+        {
+            int i = 0;
+
+            while (i < Inputs.Count)
+            {
+                if (Inputs.ElementAt(i).Circle == sender)
+                {
+                    Debug.WriteLine("Input index " + i + " clicked!");
+                }
+                i++;
+            }
+        }
+
         private void OpenItem_Click(object sender, RoutedEventArgs e)
         {
             ViewController.LoadFile();
         }
 
+        private void RollDice_Click(object sender, RoutedEventArgs e)
+        {
+            ViewController.RollDice();
+        }
+
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewController.MakeGrid(1, 2);
-            ViewController.DrawField("Field", 1, 2);
+            ViewController.Test();
         }
 
 
@@ -64,6 +84,65 @@ namespace BarricadeSpel
             SpelGrid.Children.Clear();
             SpelGrid.ColumnDefinitions.Clear();
             SpelGrid.RowDefinitions.Clear();
+        }
+
+        public void DiceRolled(object sender, EventArgs e)
+        {
+            MyEventArgs.DiceRolledArgs diceRolledArgs = (MyEventArgs.DiceRolledArgs)e;
+            int value = diceRolledArgs.Value;
+
+            switch (value)
+            {
+                case 4:
+                case 5:
+                case 6:
+                    DiceDot1.Visibility = Visibility.Visible;
+                    DiceDot7.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    DiceDot1.Visibility = Visibility.Hidden;
+                    DiceDot7.Visibility = Visibility.Hidden;
+                    break;
+            }
+            switch (value)
+            {
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    DiceDot2.Visibility = Visibility.Visible;
+                    DiceDot6.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    DiceDot2.Visibility = Visibility.Hidden;
+                    DiceDot6.Visibility = Visibility.Hidden;
+                    break;
+            } 
+            switch (value)
+            {
+                case 6:
+                    DiceDot3.Visibility = Visibility.Visible;
+                    DiceDot5.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    DiceDot3.Visibility = Visibility.Hidden;
+                    DiceDot5.Visibility = Visibility.Hidden;
+                    break;
+            } 
+            switch (value)
+            {
+                case 1:
+                case 3:
+                case 5:
+                    DiceDot4.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    DiceDot4.Visibility = Visibility.Hidden;
+                    break;
+            }
+
+            RollDice.IsEnabled = false;
         }
 
         public void DoneLoading(object sender, EventArgs e)
@@ -222,6 +301,58 @@ namespace BarricadeSpel
             SpelGrid.ShowGridLines = false;
         }
 
+        public void NewTurn(object sender, EventArgs e)
+        {
+
+            MyEventArgs.NewTurnArgs newTurnArgs = (MyEventArgs.NewTurnArgs)e;
+
+            string color = newTurnArgs.Color;
+
+            RollDice.IsEnabled = true;
+
+            switch(color)
+            {
+                case "R":
+                    TurnColor.Fill = Brushes.Red;
+                    break;
+                case "G":
+                    TurnColor.Fill = Brushes.Green;
+                    break;
+                case "Y":
+                    TurnColor.Fill = Brushes.Yellow;
+                    break;
+                case "B":
+                    TurnColor.Fill = Brushes.Blue;
+                    break;
+            }
+            
+        }
+
+        public void OpenInput(object sender, EventArgs e)
+        {
+            MyEventArgs.OpenInputArgs openInputArgs = (MyEventArgs.OpenInputArgs)e;
+
+            int xPos = openInputArgs.XPos;
+            int yPos = openInputArgs.YPos;
+
+            InputDrawing newInput = new InputDrawing(CellSize);
+            newInput.XPos = xPos;
+            newInput.YPos = yPos;
+            Inputs.Add(newInput);
+            SpelGrid.Children.Add(newInput.MyCanvas);
+
+            newInput.Circle.MouseDown += Input_Click;
+        }
+
+        public void ResetInputs(object sender, EventArgs e)
+        {
+            foreach (InputDrawing input in Inputs)
+            {
+                SpelGrid.Children.Remove(input.MyCanvas);
+            }
+            Inputs = new List<InputDrawing>();
+        }
+
         public void StartLoading(object sender, EventArgs e)
         {
             LabelMessage.Content = "Loading...";
@@ -230,7 +361,7 @@ namespace BarricadeSpel
         //Other functions
         private void FindCellSize(int nRows, int nCols)
         {
-            double w = MainGrid.ActualWidth;
+            double w = MainGrid.ActualWidth -200;
             double h = MainGrid.ActualHeight - 76;
 
             Debug.WriteLine("Found window size (" + w + "," + h + ")");
@@ -252,7 +383,6 @@ namespace BarricadeSpel
                 CellSize = wCellSize;
             }
         }
-
 
     }
 
@@ -368,6 +498,46 @@ namespace BarricadeSpel
             MyCanvas.Children.Add(Circle);
             Canvas.SetLeft(Circle, (cellSize / 7));
             Canvas.SetTop(Circle, (cellSize / 7));
+        }
+    }
+
+    public class InputDrawing //Extra class for easy input management.
+    {
+        public Ellipse Circle { get; set; }
+        public Canvas MyCanvas { get; set; }
+
+        public int XPos
+        {
+            set
+            {
+                MyCanvas.SetValue(Grid.ColumnProperty, value);
+            }
+        }
+        public int YPos
+        {
+            set
+            {
+                MyCanvas.SetValue(Grid.RowProperty, value);
+            }
+        }
+
+
+        //Constructor
+        public InputDrawing(int cellSize)
+        {
+            MyCanvas = new Canvas();
+
+            Circle = new Ellipse();
+            Circle.StrokeThickness = 2;
+            Circle.Stroke = Brushes.Green;
+            Circle.HorizontalAlignment = HorizontalAlignment.Stretch;
+            Circle.VerticalAlignment = VerticalAlignment.Stretch;
+            Circle.Fill = Brushes.Transparent;
+            Circle.Width = cellSize - ((cellSize / 10) * 2);
+            Circle.Height = cellSize - ((cellSize / 10) * 2);
+            MyCanvas.Children.Add(Circle);
+            Canvas.SetLeft(Circle, (cellSize / 10));
+            Canvas.SetTop(Circle, (cellSize / 10));
         }
     }
 }

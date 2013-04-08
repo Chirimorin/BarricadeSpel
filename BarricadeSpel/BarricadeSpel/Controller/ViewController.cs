@@ -15,10 +15,14 @@ namespace BarricadeSpel.Controller
 
         private Controller.MainController MainController;
 
+        public event EventHandler diceRolled;
         public event EventHandler doneLoading;
         public event EventHandler drawField;
-        public event EventHandler makeGrid;
         public event EventHandler drawMovable;
+        public event EventHandler makeGrid;
+        public event EventHandler newTurn;
+        public event EventHandler openInput;
+        public event EventHandler resetInputs;
         public event EventHandler startLoading;
         //TODO eventhandlers maken voor andere events (zoals verplaats pion/barricade)
 
@@ -40,10 +44,14 @@ namespace BarricadeSpel.Controller
             {
                 TextView textView = new TextView(this);
 
+                diceRolled += textView.DiceRolled;
                 doneLoading += textView.DoneLoading;
                 drawField += textView.DrawField;
                 drawMovable += textView.DrawMovable;
                 makeGrid += textView.MakeGrid;
+                newTurn += textView.NewTurn;
+                openInput += textView.OpenInput;
+                resetInputs += textView.ResetInputs;
                 startLoading += textView.StartLoading;
                 
                 //TODO extra eventhandlers linken
@@ -53,10 +61,14 @@ namespace BarricadeSpel.Controller
             {
                 MainWindow mainWindow = new MainWindow(this);
 
+                diceRolled += mainWindow.DiceRolled;
                 doneLoading += mainWindow.DoneLoading;
                 drawField += mainWindow.DrawField;
                 drawMovable += mainWindow.DrawMovable;
                 makeGrid += mainWindow.MakeGrid;
+                newTurn += mainWindow.NewTurn;
+                openInput += mainWindow.OpenInput;
+                resetInputs += mainWindow.ResetInputs;
                 startLoading += mainWindow.StartLoading;
 
                 //TODO extra eventhandlers linken
@@ -66,6 +78,15 @@ namespace BarricadeSpel.Controller
 
 
         //Output functions
+        public void DiceRolled(int value)
+        {
+            EventHandler handler = diceRolled;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.DiceRolledArgs(value));
+            }
+        }
+
         public void DoneLoading()
         {
             EventHandler handler = doneLoading;
@@ -84,6 +105,15 @@ namespace BarricadeSpel.Controller
             }
         }
 
+        public void DrawMovable(string type, string color, int xPos, int yPos)
+        {
+            EventHandler handler = drawMovable;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.DrawMovableArgs(type, color, xPos, yPos));
+            }
+        }
+
         public void MakeGrid(int x, int y)
         {
             EventHandler handler = makeGrid;
@@ -93,12 +123,30 @@ namespace BarricadeSpel.Controller
             }
         }
 
-        public void DrawMovable(string type, string color, int xPos, int yPos)
+        public void NewTurn(string color)
         {
-            EventHandler handler = drawMovable;
+            EventHandler handler = newTurn;
             if (handler != null)
             {
-                handler(this, new MyEventArgs.DrawMovableArgs(type, color, xPos, yPos));
+                handler(this, new MyEventArgs.NewTurnArgs(color));
+            }
+        }
+
+        public void OpenInput(int xPos, int yPos)
+        {
+            EventHandler handler = openInput;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.OpenInputArgs(xPos, yPos));
+            }
+        }
+
+        public void ResetInputs()
+        {
+            EventHandler handler = resetInputs;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
             }
         }
 
@@ -116,6 +164,16 @@ namespace BarricadeSpel.Controller
         public void LoadFile()
         {
             MainController.LoadFile();
+        }
+
+        public void RollDice()
+        {
+            MainController.RollDice();
+        }
+
+        public void Test()
+        {
+            MainController.Test();
         }
     }
 }

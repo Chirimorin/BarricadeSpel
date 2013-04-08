@@ -10,15 +10,17 @@ namespace BarricadeSpel.Controller
 {
     public class MainController
     {
-        private ViewController viewController { get; set; }
-        private MovableController movableController { get; set; }
+        private ViewController ViewController { get; set; }
+        private MovableController MovableController { get; set; }
+        private GameController GameController { get; set; }
 
 
         //Constructor
         public MainController()
         {
-            viewController = new ViewController(this);
-            movableController = new MovableController(this);
+            ViewController = new ViewController(this);
+            MovableController = new MovableController(this);
+            GameController = new GameController(this);
         }
 
         //Functions
@@ -38,43 +40,78 @@ namespace BarricadeSpel.Controller
 
             if (result == true)
             {
-                viewController.StartLoading();
-                movableController.ClearMovables();
+                ViewController.StartLoading();
+                MovableController.ClearMovables();
                 Controller.FileReader.Read(dialog.FileName, this);
-                viewController.DoneLoading();
+                ViewController.DoneLoading();
+                GameController.StartGame();
             }
         }
 
+        public void Test()
+        {
+            
+        }
 
         //Rerouting Functions
+        public void DiceRolled(int value)
+        {
+            ViewController.DiceRolled(value);
+        }
+
         public void DrawAllMovables()
         {
-            movableController.DrawAllMovables();
+            MovableController.DrawAllMovables();
         }
 
         public void DrawField(string type, int x, int y)
         {
-            viewController.DrawField(type, x, y);
+            ViewController.DrawField(type, x, y);
         }
 
         public void DrawMovable(string type, string color, int xPos, int yPos)
         {
-            viewController.DrawMovable(type, color, xPos, yPos);
+            ViewController.DrawMovable(type, color, xPos, yPos);
         }
 
         public void MakeBarricade(Model.Field position)
         {
-            movableController.MakeBarricade(position);
+            MovableController.MakeBarricade(position);
         }
 
         public void MakeGrid(int x, int y)
         {
-            viewController.MakeGrid(x, y);
+            ViewController.MakeGrid(x, y);
         }
 
         public void MakePawn(string color, Model.Field position)
         {
-            movableController.MakePawn(color, position);
+            MovableController.MakePawn(color, position);
+        }
+
+        public void NewTurn(string color)
+        {
+            ViewController.NewTurn(color);
+        }
+
+        public void OpenInput(int xPos, int yPos)
+        {
+            ViewController.OpenInput(xPos, yPos);
+        }
+
+        public void PawnSelector(string color)
+        {
+            MovableController.PawnSelector(color);
+        }
+
+        public void ResetInputs()
+        {
+            ViewController.ResetInputs();
+        }
+
+        public void RollDice()
+        {
+            GameController.RollDice();
         }
 
     }

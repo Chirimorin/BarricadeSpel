@@ -19,13 +19,124 @@
                 </MenuItem>
                 <MenuItem Header="Test" Click="TestButton_Click" />
             </Menu>
-            <Grid 
-                Grid.Row="1"
-                Name="SpelGrid"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Yellow" />
-            
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0"
+                      Name="UtilityGrid"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Background="White" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Name="Dice"
+                          Row="0"
+                          Background="AntiqueWhite"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Height="100"
+                          Width="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Ellipse Name="DiceDot1"
+                                 Grid.Column="0"
+                                 Grid.Row="0"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        <Ellipse Name="DiceDot2"
+                                 Grid.Column="2"
+                                 Grid.Row="0"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        <Ellipse Name="DiceDot3"
+                                 Grid.Column="0"
+                                 Grid.Row="1"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        <Ellipse Name="DiceDot4"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        <Ellipse Name="DiceDot5"
+                                 Grid.Column="2"
+                                 Grid.Row="1"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        <Ellipse Name="DiceDot6"
+                                 Grid.Column="0"
+                                 Grid.Row="2"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+                        <Ellipse Name="DiceDot7"
+                                 Grid.Column="2"
+                                 Grid.Row="2"
+                                 Fill="Black"
+                                 Height="20"
+                                 Width="20"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" />
+
+                    </Grid>
+                    <Button Name="RollDice"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Height="100"
+                            Width="150"
+                            Content="Gooi dobbelsteen"
+                            Click="RollDice_Click"
+                            IsEnabled="False"/>
+                    <Label Name="Turn"
+                           Grid.Row="2"
+                           Content="Turn"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top" />
+                    <Ellipse Name="TurnColor"
+                             Grid.Row="2"
+                             Height="100"
+                             Width="100"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center" />
+                    
+                </Grid>
+                <Grid Name="SpelGrid"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Yellow" />
+            </Grid>
             <Grid
             Grid.Row="2"
             Background="White">

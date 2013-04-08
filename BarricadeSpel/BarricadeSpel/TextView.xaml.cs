@@ -34,6 +34,11 @@ namespace BarricadeSpel
 
 
         //Output functions
+        public void DiceRolled(object sender, EventArgs e)
+        {
+            
+        }
+
         public void DoneLoading(object sender, EventArgs e)
         {
 
@@ -72,12 +77,26 @@ namespace BarricadeSpel
             //TODO Make grid.
         }
 
+        public void NewTurn(object sender, EventArgs e)
+        {
+
+        }
+
+        public void OpenInput(object sender, EventArgs e)
+        {
+
+        }
+
+        public void ResetInputs(object sender, EventArgs e)
+        {
+
+        }
+
         public void StartLoading(object sender, EventArgs e)
         {
 
         }
 
         //Other functions
-
     }
 }

@@ -87,5 +87,39 @@ namespace BarricadeSpel.Controller
                     break;
             }
         }
+
+        public void PawnSelector(string color) //Makes all pawns of said color available to be chosen.
+        {
+            MainController.ResetInputs();
+
+            switch (color)
+            {
+                case "R":
+                    foreach (Model.Pawn pawn in PlayerR.Pawns)
+                    {
+                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                    }
+                    break;
+                case "G":
+                    foreach (Model.Pawn pawn in PlayerG.Pawns)
+                    {
+                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                    }
+                    break;
+                case "Y":
+                    foreach (Model.Pawn pawn in PlayerY.Pawns)
+                    {
+                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                    }
+                    break;
+                case "B":
+                    foreach (Model.Pawn pawn in PlayerB.Pawns)
+                    {
+                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                    }
+                    break;
+            }
+        }
+
     }
 }
