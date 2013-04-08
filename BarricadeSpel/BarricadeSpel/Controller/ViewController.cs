@@ -173,6 +173,18 @@ namespace BarricadeSpel.Controller
 
 
         //Input functions
+        public void Cheats_Turn(string color)
+        {
+            NewTurn(color);
+            MainController.Cheats_Turn(color);
+        }
+
+        public void Cheats_Dice(int number)
+        {
+            DiceRolled(number);
+            MainController.Cheats_Dice(number);
+        }
+
         public void LoadFile()
         {
             MainController.LoadFile();

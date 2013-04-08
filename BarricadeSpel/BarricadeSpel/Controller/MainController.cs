@@ -65,6 +65,16 @@ namespace BarricadeSpel.Controller
         }
 
         //Rerouting Functions
+        public void Cheats_Dice(int number)
+        {
+            GameController.Cheats_Dice(number);
+        }
+
+        public void Cheats_Turn(string color)
+        {
+            GameController.Cheats_Turn(color);
+        }
+
         public void DiceRolled(int value)
         {
             ViewController.DiceRolled(value);
@@ -118,11 +128,6 @@ namespace BarricadeSpel.Controller
         public void InputSelected(int index)
         {
             GameController.InputSelected(index);
-        }
-
-        public void PawnSelector(string color)
-        {
-            GameController.PawnSelector(color);
         }
 
         public void ResetInputs()

@@ -43,6 +43,56 @@ namespace BarricadeSpel
 
 
         //Input handling
+        private void Cheats_R(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Turn("R");
+        }
+
+        private void Cheats_G(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Turn("G");
+        }
+
+        private void Cheats_Y(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Turn("Y");
+        }
+
+        private void Cheats_B(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Turn("B");
+        }
+
+        private void Cheats_1(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Dice(1);
+        }
+
+        private void Cheats_2(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Dice(2);
+        }
+
+        private void Cheats_3(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Dice(3);
+        }
+
+        private void Cheats_4(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Dice(4);
+        }
+
+        private void Cheats_5(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Dice(5);
+        }
+
+        private void Cheats_6(object sender, RoutedEventArgs e)
+        {
+            ViewController.Cheats_Dice(6);
+        }
+
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -540,8 +590,8 @@ namespace BarricadeSpel
             MyCanvas = new Canvas();
 
             Circle = new Ellipse();
-            Circle.StrokeThickness = 2;
-            Circle.Stroke = Brushes.Green;
+            Circle.StrokeThickness = 4;
+            Circle.Stroke = Brushes.LimeGreen;
             Circle.HorizontalAlignment = HorizontalAlignment.Stretch;
             Circle.VerticalAlignment = VerticalAlignment.Stretch;
             Circle.Fill = Brushes.Transparent;

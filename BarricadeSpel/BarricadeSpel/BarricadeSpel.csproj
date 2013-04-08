@@ -66,7 +66,6 @@
     <Compile Include="Model\Field.cs" />
     <Compile Include="Model\Forest.cs" />
     <Compile Include="Model\GoalField.cs" />
-    <Compile Include="Model\LinkField.cs" />
     <Compile Include="Model\Movable.cs" />
     <Compile Include="Model\Pawn.cs" />
     <Compile Include="Model\Player.cs" />

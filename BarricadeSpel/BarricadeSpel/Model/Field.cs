@@ -9,11 +9,11 @@ namespace BarricadeSpel.Model
 {
     public class Field
     {
-        public event EventHandler broadcastMove;
+        public virtual event EventHandler broadcastMove;
 
         protected Movable _contains;
 
-        public Movable Contains //Updated by movable! Controllers don't need to touch this. 
+        public virtual Movable Contains //Updated by movable! Controllers don't need to touch this. 
         { 
             get 
             { 
@@ -21,17 +21,6 @@ namespace BarricadeSpel.Model
             }
             set 
             {
-                if (_contains != null && value != null) //Only if the call is not by removing
-                {
-                    if (_contains.Type == "barricade")
-                    {
-                        Debug.WriteLine("Barricade hit!");
-                    }
-                    if (_contains.Type == "pawn")
-                    {
-                        Debug.WriteLine("pawn hit!");
-                    }
-                }
                 _contains = value;
             }
         } 
@@ -177,21 +166,7 @@ namespace BarricadeSpel.Model
 
         
         //Functions
-        public bool CanMoveOver()
-        {
-            if (Contains != null)
-                if (Contains.Type == "barricade")
-                    return false;
-
-            return true;
-        }
-
-        public bool CanMoveTo(string type)
-        {
-            return true;
-        }
-
-        public void BroadcastMove(int numSteps, Field comesFrom)
+        public virtual void BroadcastMove(int numSteps, Field comesFrom)
         {
             if (numSteps <= 0) //Pawn is trying to stop on this field. Allow if possible
             {
@@ -223,10 +198,12 @@ namespace BarricadeSpel.Model
                         _exitW.BroadcastMove(numSteps, this);
                     }
                 }
-
             }
+        }
 
-
+        public virtual void RemoveMovable(Movable movable)
+        {
+            //Only needed by forest. 
         }
 
     }

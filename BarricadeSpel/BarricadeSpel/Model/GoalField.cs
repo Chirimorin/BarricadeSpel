@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,9 @@ namespace BarricadeSpel.Model
 {
     class GoalField : Field
     {
-        public new Movable Contains
+        public override event EventHandler broadcastMove;
+
+        public override Movable Contains
         {
             set
             {
@@ -26,23 +29,22 @@ namespace BarricadeSpel.Model
 
 
         //Functions
-        public new bool CanMoveOver()
-        {
-            return false;
-        }
-
-        public new bool CanMoveTo(string type)
-        {
-            if (type == "barricade")
-                return false;
-            return true;
-        }
-
         private void FinishGame() //TODO make whole function
         {
-            //finish game logic
+            Debug.WriteLine("GAME FINISHED!");
         }
 
+        public override void BroadcastMove(int numSteps, Field comesFrom)
+        {
+            if (numSteps <= 0) //Pawn is trying to stop on this field. Allow always
+            {
+                EventHandler handler = broadcastMove;
+                if (handler != null)
+                {
+                    handler(this, new MyEventArgs.BroadcastMoveArgs(XPos, YPos, this));
+                }
+            }
+        }
 
     }
 }

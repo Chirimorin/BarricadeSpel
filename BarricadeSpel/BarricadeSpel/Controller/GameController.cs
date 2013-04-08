@@ -42,6 +42,19 @@ namespace BarricadeSpel.Controller
 
 
         //Functions
+        public void Cheats_Dice(int number)
+        {
+            SubTurn = "PawnSelect";
+            Dice.Value = number;
+            PawnSelector(Turn);
+        }
+
+        public void Cheats_Turn(string color)
+        {
+            Turn = color;
+            SubTurn = "DiceRoll";
+        }
+
         public void ClearMovables()
         {
             PlayerR = new Model.Player(true); //TODO Choose AI players
@@ -151,14 +164,27 @@ namespace BarricadeSpel.Controller
 
                 SelectedPawn.Position.BroadcastMove(Dice.Value, null);
                 Debug.WriteLine("Done broadcasting moves");
-                SubTurn = "FieldSelect";
+                SubTurn = "MoveSelect";
                 return;
             }
 
-            if (SubTurn == "FieldSelect")
+            if (SubTurn == "MoveSelect")
             {
                 MainController.ResetInputs();
                 Model.Field selectedField = SelectableFields.ElementAt(index);
+                if (selectedField.Contains != null)
+                {
+                    if (selectedField.Contains.Type == "pawn")
+                    {
+                        Debug.WriteLine("Pawn hit!");
+                        //TODO return pawn
+                    }
+                    if (selectedField.Contains.Type == "barricade")
+                    {
+                        Debug.WriteLine("Barricade hit!");
+                        //TODO allow barricade move
+                    }
+                }
                 SelectedPawn.Position = selectedField;
                 MainController.MovePawn(SelectedPawn.DrawIndex, selectedField.XPos, selectedField.YPos);
                 SelectedPawn = null;
@@ -214,7 +240,7 @@ namespace BarricadeSpel.Controller
         {
             SubTurn = "PawnSelect";
             MainController.DiceRolled(Dice.Roll());
-            MainController.PawnSelector(Turn);
+            PawnSelector(Turn);
         }
 
         public void StartGame()

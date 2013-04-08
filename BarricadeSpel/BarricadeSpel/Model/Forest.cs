@@ -9,21 +9,16 @@ namespace BarricadeSpel.Model
     class Forest : Field
     {
         public int NumForest { get; set; }
-        private new List<Movable> _contains;
+        private List<Movable> _container;
 
-        public new Movable Contains //TODO fix setter
+        public override Movable Contains //TODO fix setter
         {
             get { return null; }
             set
             {
                 if (value != null)
                 {
-                    _contains.Add(value);
-                }
-                else
-                {
-                    //Remove source of setter? possible?
-                    //otherwise custom check for forest in movable/pawn needed
+                    _container.Add(value);
                 }
             }
         }
@@ -33,20 +28,45 @@ namespace BarricadeSpel.Model
             : base(exitN, exitE, exitS, exitW, false, 0, xPos, yPos)
         {
             NumForest = numForest;
-            _contains = new List<Movable>();
+            _container = new List<Movable>();
         }
 
 
         //Functions
-        public new bool CanMoveOver()
+        public override void BroadcastMove(int numSteps, Field comesFrom)
         {
-            return false;
+            if (numSteps <= 0) //Pawn is trying to stop on this field. Allow if possible
+            {
+                return; //Can't walk to forests
+            }
+            else //This is needed for moving off the forest. 
+            {
+                numSteps--;
+                if (comesFrom == null) //Call is originating from the pawn and not an exit
+                {
+                    if (_exitN != null)
+                    {
+                        _exitN.BroadcastMove(numSteps, this);
+                    }
+                    if (_exitE != null)
+                    {
+                        _exitE.BroadcastMove(numSteps, this);
+                    }
+                    if (_exitS != null)
+                    {
+                        _exitS.BroadcastMove(numSteps, this);
+                    }
+                    if (_exitW != null)
+                    {
+                        _exitW.BroadcastMove(numSteps, this);
+                    }
+                }
+            }
         }
 
-        public new bool CanMoveTo(string type)
+        public override void RemoveMovable(Movable movable)
         {
-            return false;
+            _container.Remove(movable);
         }
-
     }
 }

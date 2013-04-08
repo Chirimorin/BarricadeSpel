@@ -18,6 +18,22 @@
                     <MenuItem Header="E_xit" Click="Exit_Click" />
                 </MenuItem>
                 <MenuItem Header="Test" Click="TestButton_Click" />
+                <MenuItem Header="_Cheats">
+                    <MenuItem Header="Choose _Turn">
+                        <MenuItem Header="_Red" Click="Cheats_R" />
+                        <MenuItem Header="_Green" Click="Cheats_G" />
+                        <MenuItem Header="_Yellow" Click="Cheats_Y" />
+                        <MenuItem Header="_Blue" Click="Cheats_B" />
+                    </MenuItem>
+                    <MenuItem Header="Choose _DiceRoll">
+                        <MenuItem Header="1" Click="Cheats_1" />
+                        <MenuItem Header="2" Click="Cheats_2" />
+                        <MenuItem Header="3" Click="Cheats_3" />
+                        <MenuItem Header="4" Click="Cheats_4" />
+                        <MenuItem Header="5" Click="Cheats_5" />
+                        <MenuItem Header="6" Click="Cheats_6" />
+                    </MenuItem>
+                </MenuItem>
             </Menu>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>

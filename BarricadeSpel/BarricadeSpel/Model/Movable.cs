@@ -17,7 +17,10 @@ namespace BarricadeSpel.Model
                 if (value != null)
                 {
                     if (_position != null)
+                    {
                         _position.Contains = null;
+                        _position.RemoveMovable(this);
+                    }
                     _position = value;
                     _position.Contains = this;
                 }

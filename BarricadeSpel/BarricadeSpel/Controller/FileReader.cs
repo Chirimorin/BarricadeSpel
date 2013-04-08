@@ -60,7 +60,7 @@ namespace BarricadeSpel.Controller
                             if (characters[(j * 4) + 1, i - 1] == "|")
                             {
                                 Debug.WriteLine("ExitN found");
-                                if (characters[(j * 4) + 1, i] == "|") //linkfields unnodig maken? TODO test dit!
+                                if (characters[(j * 4) + 1, i - 2] == "|") //Removing the need for linking fields. Only works for vertical long links!
                                 {
                                     Debug.WriteLine("EXITN 1 extra up!");
                                     exitN = fields[j - 1, (i / 2) - 2];
@@ -118,7 +118,6 @@ namespace BarricadeSpel.Controller
                             case " ":
                                 if (characters[(j * 4) + 1, i] == "|")
                                 {
-                                    //fields[j - 1, (i / 2)] = new Model.LinkField(exitN, null, null, exitW);
                                     mainController.DrawField("LinkField", j - 1, (i / 2));
                                 }
                                 break;
