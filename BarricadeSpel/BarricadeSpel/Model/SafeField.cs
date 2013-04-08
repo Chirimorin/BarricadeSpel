@@ -21,12 +21,15 @@ namespace BarricadeSpel.Model
         //Functions
         public override void BroadcastMove(int numSteps, Field comesFrom)
         {
-            if (numSteps <= 0 && this.Contains == null) //Pawn is trying to stop on this field. Allow if no pawn is on it.
+            if (numSteps <= 0) //Pawn is trying to stop on this field. Allow if no pawn is on it.
             {
-                EventHandler handler = broadcastMove;
-                if (handler != null)
+                if (this.Contains == null)
                 {
-                    handler(this, new MyEventArgs.BroadcastMoveArgs(XPos, YPos, this));
+                    EventHandler handler = broadcastMove;
+                    if (handler != null)
+                    {
+                        handler(this, new MyEventArgs.BroadcastMoveArgs(XPos, YPos, this));
+                    }
                 }
             }
             else
