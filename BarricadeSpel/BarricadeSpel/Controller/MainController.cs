@@ -65,11 +65,6 @@ namespace BarricadeSpel.Controller
             ViewController.ResetGame();
         }
 
-        public void Test()
-        {
-            
-        }
-
         //Rerouting Functions
         public void Cheats_Dice(int number)
         {
@@ -149,6 +144,11 @@ namespace BarricadeSpel.Controller
         public void OpenInput(int xPos, int yPos)
         {
             ViewController.OpenInput(xPos, yPos);
+        }
+
+        public void RegisterForest(Model.Forest forest)
+        {
+            GameController.RegisterForest(forest);
         }
 
         public void RegisterStartField(Model.StartField field)

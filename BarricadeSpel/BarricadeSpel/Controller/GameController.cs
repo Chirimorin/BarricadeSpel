@@ -202,10 +202,10 @@ namespace BarricadeSpel.Controller
                         Debug.WriteLine("Pawn hit!");
                         Model.Pawn hitPawn = (Model.Pawn)selectedField.Contains;
 
-                        ReturnPawn(hitPawn, PlayerR);
-                        ReturnPawn(hitPawn, PlayerG);
-                        ReturnPawn(hitPawn, PlayerY);
-                        ReturnPawn(hitPawn, PlayerB);
+                        ReturnPawn(hitPawn, PlayerR, selectedField.ReturnTo);
+                        ReturnPawn(hitPawn, PlayerG, selectedField.ReturnTo);
+                        ReturnPawn(hitPawn, PlayerY, selectedField.ReturnTo);
+                        ReturnPawn(hitPawn, PlayerB, selectedField.ReturnTo);
 
                         MovePawn(selectedField);
                     }
@@ -292,27 +292,40 @@ namespace BarricadeSpel.Controller
             Turn = null;
         }
 
-        public void ReturnPawn(Model.Pawn hitPawn, Model.Player player)
+        public void ReturnPawn(Model.Pawn hitPawn, Model.Player player, int returnTo)
         {
-            foreach (Model.Pawn pawn in player.Pawns)
+            if (returnTo == 0)
             {
-                if (pawn == hitPawn)
+                foreach (Model.Pawn pawn in player.Pawns)
                 {
-                    bool found = false;
-                    int i = 0;
-                    while (!found)
+                    if (pawn == hitPawn)
                     {
-                        Debug.WriteLine("looking for empty spot at " + i);
-                        if (player.StartFields.ElementAt(i).Contains == null)
+                        bool found = false;
+                        int i = 0;
+                        while (!found)
                         {
-                            found = true;
-                            hitPawn.Position = player.StartFields.ElementAt(i);
-                            MainController.MovePawn(hitPawn.DrawIndex, player.StartFields.ElementAt(i).XPos, player.StartFields.ElementAt(i).YPos);
+                            Debug.WriteLine("looking for empty spot at " + i);
+                            if (player.StartFields.ElementAt(i).Contains == null)
+                            {
+                                found = true;
+                                hitPawn.Position = player.StartFields.ElementAt(i);
+                                MainController.MovePawn(hitPawn.DrawIndex, player.StartFields.ElementAt(i).XPos, player.StartFields.ElementAt(i).YPos);
+                            }
+                            i++;
                         }
-                        i++;
                     }
                 }
             }
+            else //return to a forest
+            {
+                hitPawn.Position = Forests.ElementAt(returnTo - 1);
+                MainController.MovePawn(hitPawn.DrawIndex, Forests.ElementAt(returnTo - 1).XPos, Forests.ElementAt(returnTo - 1).YPos);
+            }
+        }
+
+        public void RegisterForest(Model.Forest forest)
+        {
+            Forests.Add(forest);
         }
 
         public void RegisterSelectableField(Model.Field field)

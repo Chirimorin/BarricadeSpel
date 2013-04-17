@@ -259,10 +259,5 @@ namespace BarricadeSpel.Controller
             NewPawnEnabled(false);
             ResetInputs();
         }
-
-        public void Test()
-        {
-            MainController.Test();
-        }
     }
 }

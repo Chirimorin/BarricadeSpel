@@ -97,6 +97,7 @@ namespace BarricadeSpel.Controller
                                 {
                                     fields[j - 1, (i / 2)] = new Model.Forest(exitN, null, null, exitW, numForest, j - 1, (i / 2));
                                     mainController.DrawField("Forest", j - 1, (i / 2));
+                                    mainController.RegisterForest((Model.Forest)fields[j - 1, (i / 2)]);
                                     break;
                                 }
                                 //else startfield

@@ -132,11 +132,6 @@ namespace BarricadeSpel
             ViewController.SkipTurn();
         }
 
-        private void TestButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewController.Test();
-        }
-
 
         //Output functions
         private void ClearGrid()
@@ -207,7 +202,7 @@ namespace BarricadeSpel
 
         public void DoneLoading(object sender, EventArgs e)
         {
-            LabelMessage.Content = "Done";
+            
         }
         
         public void DrawField(object sender, EventArgs e)
@@ -463,7 +458,7 @@ namespace BarricadeSpel
 
         public void StartLoading(object sender, EventArgs e)
         {
-            LabelMessage.Content = "Loading...";
+            
         }
 
         //Other functions

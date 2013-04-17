@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BarricadeSpel.Model
 {
-    class Forest : Field
+    public class Forest : Field
     {
         public int NumForest { get; set; }
         private List<Movable> _container;
