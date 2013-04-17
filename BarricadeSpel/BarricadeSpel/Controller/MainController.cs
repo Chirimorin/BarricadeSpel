@@ -52,11 +52,17 @@ namespace BarricadeSpel.Controller
             if (result == true)
             {
                 ViewController.StartLoading();
-                GameController.ClearMovables();
+                ResetGame();
                 Controller.FileReader.Read(dialog.FileName, this);
                 ViewController.DoneLoading();
                 GameController.StartGame();
             }
+        }
+
+        public void ResetGame()
+        {
+            GameController.ResetGame();
+            ViewController.ResetGame();
         }
 
         public void Test()

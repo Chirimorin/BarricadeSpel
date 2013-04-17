@@ -97,6 +97,11 @@ namespace BarricadeSpel
 
         }
 
+        public void ResetGame(object sender, EventArgs e)
+        {
+
+        }
+
         public void ResetInputs(object sender, EventArgs e)
         {
 

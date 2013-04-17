@@ -24,6 +24,7 @@ namespace BarricadeSpel.Controller
         public event EventHandler movePawn;
         public event EventHandler newTurn;
         public event EventHandler openInput;
+        public event EventHandler resetGame;
         public event EventHandler resetInputs;
         public event EventHandler startLoading;
         //TODO eventhandlers maken voor andere events (zoals verplaats pion/barricade)
@@ -55,6 +56,7 @@ namespace BarricadeSpel.Controller
                 movePawn += textView.MovePawn;
                 newTurn += textView.NewTurn;
                 openInput += textView.OpenInput;
+                resetGame += textView.ResetGame;
                 resetInputs += textView.ResetInputs;
                 startLoading += textView.StartLoading;
                 
@@ -74,6 +76,7 @@ namespace BarricadeSpel.Controller
                 movePawn += mainWindow.MovePawn;
                 newTurn += mainWindow.NewTurn;
                 openInput += mainWindow.OpenInput;
+                resetGame += mainWindow.ResetGame;
                 resetInputs += mainWindow.ResetInputs;
                 startLoading += mainWindow.StartLoading;
 
@@ -162,6 +165,15 @@ namespace BarricadeSpel.Controller
             if (handler != null)
             {
                 handler(this, new MyEventArgs.OpenInputArgs(xPos, yPos));
+            }
+        }
+
+        public void ResetGame()
+        {
+            EventHandler handler = resetGame;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
             }
         }
 

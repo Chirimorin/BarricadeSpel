@@ -38,9 +38,7 @@ namespace BarricadeSpel.Controller
         public GameController(MainController mainController)
         {
             MainController = mainController;
-            Dice = new Model.Dice();
-
-            ClearMovables();
+            ResetGame();
         }
 
 
@@ -65,7 +63,13 @@ namespace BarricadeSpel.Controller
             PlayerY = new Model.Player(true);
             PlayerB = new Model.Player(true);
 
+            Forests = new List<Model.Forest>();
             Barricades = new List<Model.Barricade>();
+            SelectableFields = new List<Model.Field>();
+            SelectablePawns = new List<Model.Pawn>();
+            
+            SelectedBarricade = null;
+            SelectedPawn = null;
         }
 
         public void DrawAllMovables()
@@ -269,6 +273,13 @@ namespace BarricadeSpel.Controller
                     }
                     break;
             }
+        }
+
+        public void ResetGame()
+        {
+            ClearMovables();
+            Dice = new Model.Dice();
+            Turn = null;
         }
 
         public void ReturnPawn(Model.Pawn hitPawn, Model.Player player)

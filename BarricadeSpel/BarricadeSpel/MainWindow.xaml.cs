@@ -418,6 +418,14 @@ namespace BarricadeSpel
             newInput.Circle.MouseDown += Input_Click;
         }
 
+        public void ResetGame(object sender, EventArgs e)
+        {
+            Pawns = new List<PawnDrawing>();
+            Barricades = new List<BarricadeDrawing>();
+            Inputs = new List<InputDrawing>();
+
+        }
+
         public void ResetInputs(object sender, EventArgs e)
         {
             foreach (InputDrawing input in Inputs)
