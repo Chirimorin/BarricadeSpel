@@ -9,6 +9,19 @@ namespace BarricadeSpel.Model
 {
     class Barricade : Movable
     {
+        public override Field Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value != null)
+                {
+                    _position = value;
+                    _position.Contains = this;
+                }
+            }
+        }
+
         //Constructor
         public Barricade(Field position)
         {

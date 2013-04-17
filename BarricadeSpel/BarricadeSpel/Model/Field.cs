@@ -33,6 +33,7 @@ namespace BarricadeSpel.Model
         public int XPos { get; protected set; }
         public int YPos { get; protected set; }
 
+        
 
         //Logic for updating exits, automatically changes the number of exits as needed. 
         //Also updates the exits of other fields as needed. 
@@ -141,19 +142,21 @@ namespace BarricadeSpel.Model
         }
 
         public int NumExits { get; private set; }
-        public bool BarricareAllowed { get; private set; }
+        public bool BarricadeAllowed { get; private set; }
         public int ReturnTo { get; private set; } //index of the forest to return to, 0 for start
+        public bool BroadcastedBarricade { get; set; }
 
         //Constructor
         public Field(Field exitN, Field exitE, Field exitS, Field exitW, bool barricadeAllowed, int returnTo, int xPos, int yPos)
         {
+            this.BroadcastedBarricade = false;
             this.XPos = xPos;
             this.YPos = yPos;
             this.ExitN = exitN;
             this.ExitE = exitE;
             this.ExitS = exitS;
             this.ExitW = exitW;
-            this.BarricareAllowed = barricadeAllowed;
+            this.BarricadeAllowed = barricadeAllowed;
             this.ReturnTo = returnTo;
             Debug.Write("Field made. ");
             if (exitN != null)
@@ -197,6 +200,63 @@ namespace BarricadeSpel.Model
                     {
                         _exitW.BroadcastMove(numSteps, this);
                     }
+                }
+            }
+        }
+
+        public void BroadcastBarricades(Field comesFrom)
+        {
+            if (!BroadcastedBarricade)
+            {
+                BroadcastedBarricade = true;
+                if (_contains == null && BarricadeAllowed)
+                {
+                    EventHandler handler = broadcastMove;
+                    if (handler != null)
+                    {
+                        handler(this, new MyEventArgs.BroadcastMoveArgs(XPos, YPos, this));
+                    }
+                }
+
+                if (comesFrom != _exitN && _exitN != null)
+                {
+                    _exitN.BroadcastBarricades(this);
+                }
+                if (comesFrom != _exitE && _exitE != null)
+                {
+                    _exitE.BroadcastBarricades(this);
+                }
+                if (comesFrom != _exitS && _exitS != null)
+                {
+                    _exitS.BroadcastBarricades(this);
+                }
+                if (comesFrom != _exitW && _exitW != null)
+                {
+                    _exitW.BroadcastBarricades(this);
+                }
+            }
+        }
+
+        public void ResetBroadcastedBarricades(Field comesFrom)
+        {
+            if (BroadcastedBarricade)
+            {
+                BroadcastedBarricade = false;
+                if (comesFrom != _exitN && _exitN != null)
+                {
+                    _exitN.ResetBroadcastedBarricades(this);
+                }
+                if (comesFrom != _exitE && _exitE != null)
+                {
+                    _exitE.ResetBroadcastedBarricades(this);
+                }
+                if (comesFrom != _exitS && _exitS != null)
+                {
+                    _exitS.ResetBroadcastedBarricades(this);
+                }
+                if (comesFrom != _exitW && _exitW != null)
+                {
+                    _exitW.ResetBroadcastedBarricades(this);
                 }
             }
         }

@@ -77,6 +77,11 @@ namespace BarricadeSpel
             //TODO Make grid.
         }
 
+        public void MoveBarricade(object sender, EventArgs e)
+        {
+
+        }
+
         public void MovePawn(object sender, EventArgs e)
         {
 

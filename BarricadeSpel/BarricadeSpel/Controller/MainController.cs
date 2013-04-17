@@ -95,6 +95,11 @@ namespace BarricadeSpel.Controller
             ViewController.DrawMovable(type, color, xPos, yPos);
         }
 
+        public void InputSelected(int index)
+        {
+            GameController.InputSelected(index);
+        }
+
         public void MakeBarricade(Model.Field position)
         {
             GameController.MakeBarricade(position);
@@ -108,6 +113,11 @@ namespace BarricadeSpel.Controller
         public void MakePawn(string color, Model.Field position)
         {
             GameController.MakePawn(color, position);
+        }
+
+        public void MoveBarricade(int index, int newX, int newY)
+        {
+            ViewController.MoveBarricade(index, newX, newY);
         }
 
         public void MovePawn(int index, int newX, int newY)
@@ -125,9 +135,9 @@ namespace BarricadeSpel.Controller
             ViewController.OpenInput(xPos, yPos);
         }
 
-        public void InputSelected(int index)
+        public void RegisterStartField(Model.StartField field)
         {
-            GameController.InputSelected(index);
+            GameController.RegisterStartField(field);
         }
 
         public void ResetInputs()

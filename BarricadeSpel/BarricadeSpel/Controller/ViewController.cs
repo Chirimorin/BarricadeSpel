@@ -20,6 +20,7 @@ namespace BarricadeSpel.Controller
         public event EventHandler drawField;
         public event EventHandler drawMovable;
         public event EventHandler makeGrid;
+        public event EventHandler moveBarricade;
         public event EventHandler movePawn;
         public event EventHandler newTurn;
         public event EventHandler openInput;
@@ -50,6 +51,7 @@ namespace BarricadeSpel.Controller
                 drawField += textView.DrawField;
                 drawMovable += textView.DrawMovable;
                 makeGrid += textView.MakeGrid;
+                moveBarricade += textView.MoveBarricade;
                 movePawn += textView.MovePawn;
                 newTurn += textView.NewTurn;
                 openInput += textView.OpenInput;
@@ -68,6 +70,7 @@ namespace BarricadeSpel.Controller
                 drawField += mainWindow.DrawField;
                 drawMovable += mainWindow.DrawMovable;
                 makeGrid += mainWindow.MakeGrid;
+                moveBarricade += mainWindow.MoveBarricade;
                 movePawn += mainWindow.MovePawn;
                 newTurn += mainWindow.NewTurn;
                 openInput += mainWindow.OpenInput;
@@ -123,6 +126,15 @@ namespace BarricadeSpel.Controller
             if (handler != null)
             {
                 handler(this, new MyEventArgs.MakeGridArgs(x, y));
+            }
+        }
+
+        public void MoveBarricade(int index, int newX, int newY)
+        {
+            EventHandler handler = moveBarricade;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.MovePawnArgs(index, newX, newY));
             }
         }
 

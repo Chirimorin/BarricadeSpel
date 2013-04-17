@@ -10,19 +10,17 @@ namespace BarricadeSpel.Model
     {
         public bool IsPlayer { get; set; } //true = speler, false = AI
         public List<Model.Pawn> Pawns { get; set; }
+        public List<Model.StartField> StartFields { get; set; } //used for returning
 
         //Constructor
         public Player(bool isPlayer)
         {
             this.IsPlayer = isPlayer;
             Pawns = new List<Pawn>();
+            StartFields = new List<StartField>();
         }
 
         //Functions
-        public void AddPawn(Field position)
-        {
-            Pawns.Add(new Pawn(position));
-        }
 
     }
 }

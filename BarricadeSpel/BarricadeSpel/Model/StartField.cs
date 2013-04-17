@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BarricadeSpel.Model
 {
-    class StartField : Field
+    public class StartField : Field
     {
         public string Color { get; set; } //Letter representation of the color.
 

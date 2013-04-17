@@ -100,7 +100,8 @@ namespace BarricadeSpel.Controller
                                     break;
                                 }
                                 //else startfield
-                                fields[j - 1, (i / 2)] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 2, i], j - 1, (i / 2));
+                                fields[j - 1, (i / 2)] = new Model.StartField(exitN, null, null, exitW, characters[(j * 4) + 1, i], j - 1, (i / 2));
+                                mainController.RegisterStartField((Model.StartField)fields[j - 1, (i / 2)]);
                                 mainController.DrawField("StartField", j - 1, (i / 2));
                                 break;
                             case "(":

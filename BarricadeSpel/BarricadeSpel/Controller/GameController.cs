@@ -17,7 +17,10 @@ namespace BarricadeSpel.Controller
         public Model.Player PlayerY { get; set; }
         public Model.Player PlayerB { get; set; }
 
+        public List<Model.Forest> Forests { get; set; } //for returning
+
         public List<Model.Barricade> Barricades { get; set; }
+        public Model.Barricade SelectedBarricade { get; set; }
 
         public List<Model.Pawn> SelectablePawns { get; set; } //A list of pawns to be chosen from by the player
         public Model.Pawn SelectedPawn { get; set; } //The actual pawn that was chosen
@@ -113,18 +116,24 @@ namespace BarricadeSpel.Controller
             switch (color)
             {
                 case "R":
-                    PlayerR.AddPawn(position);
+                    PlayerR.Pawns.Add(new Model.Pawn(position));
                     break;
                 case "G":
-                    PlayerG.AddPawn(position);
+                    PlayerG.Pawns.Add(new Model.Pawn(position));
                     break;
                 case "Y":
-                    PlayerY.AddPawn(position);
+                    PlayerY.Pawns.Add(new Model.Pawn(position));
                     break;
                 case "B":
-                    PlayerB.AddPawn(position);
+                    PlayerB.Pawns.Add(new Model.Pawn(position));
                     break;
             }
+        }
+
+        public void MovePawn(Model.Field selectedField)
+        {
+            SelectedPawn.Position = selectedField;
+            MainController.MovePawn(SelectedPawn.DrawIndex, selectedField.XPos, selectedField.YPos);
         }
 
         public void NextTurn()
@@ -172,24 +181,55 @@ namespace BarricadeSpel.Controller
             {
                 MainController.ResetInputs();
                 Model.Field selectedField = SelectableFields.ElementAt(index);
+                bool barricade = false;
                 if (selectedField.Contains != null)
                 {
                     if (selectedField.Contains.Type == "pawn")
                     {
                         Debug.WriteLine("Pawn hit!");
-                        //TODO return pawn
+                        Model.Pawn hitPawn = (Model.Pawn)selectedField.Contains;
+
+                        ReturnPawn(hitPawn, PlayerR);
+                        ReturnPawn(hitPawn, PlayerG);
+                        ReturnPawn(hitPawn, PlayerY);
+                        ReturnPawn(hitPawn, PlayerB);
+
+                        MovePawn(selectedField);
                     }
-                    if (selectedField.Contains.Type == "barricade")
+                    else if (selectedField.Contains.Type == "barricade")
                     {
                         Debug.WriteLine("Barricade hit!");
-                        //TODO allow barricade move
+                        SelectedBarricade = (Model.Barricade)selectedField.Contains;
+                        MovePawn(selectedField);
+                        SelectableFields = new List<Model.Field>();
+                        barricade = true;
+                        MainController.ResetInputs();
+                        SelectedPawn.Position.BroadcastBarricades(null);
+                        
+                        SubTurn = "BarricadeMove";
                     }
                 }
-                SelectedPawn.Position = selectedField;
-                MainController.MovePawn(SelectedPawn.DrawIndex, selectedField.XPos, selectedField.YPos);
+                else
+                {
+                    MovePawn(selectedField);
+                }
+
                 SelectedPawn = null;
-                NextTurn();
+                if (!barricade)
+                {
+                    NextTurn();
+                }
                 return;
+            }
+            if (SubTurn == "BarricadeMove")
+            {
+                SelectedBarricade.Position.ResetBroadcastedBarricades(null);
+                MainController.ResetInputs();
+                Model.Field selectedField = SelectableFields.ElementAt(index);
+                SelectedBarricade.Position = selectedField;
+                MainController.MoveBarricade(SelectedBarricade.DrawIndex, selectedField.XPos, selectedField.YPos);
+                SelectedBarricade = null;
+                NextTurn();
             }
         }
 
@@ -231,9 +271,52 @@ namespace BarricadeSpel.Controller
             }
         }
 
+        public void ReturnPawn(Model.Pawn hitPawn, Model.Player player)
+        {
+            foreach (Model.Pawn pawn in player.Pawns)
+            {
+                if (pawn == hitPawn)
+                {
+                    bool found = false;
+                    int i = 0;
+                    while (!found)
+                    {
+                        Debug.WriteLine("looking for empty spot at " + i);
+                        if (player.StartFields.ElementAt(i).Contains == null)
+                        {
+                            found = true;
+                            hitPawn.Position = player.StartFields.ElementAt(i);
+                            MainController.MovePawn(hitPawn.DrawIndex, player.StartFields.ElementAt(i).XPos, player.StartFields.ElementAt(i).YPos);
+                        }
+                        i++;
+                    }
+                }
+            }
+        }
+
         public void RegisterSelectableField(Model.Field field)
         {
             SelectableFields.Add(field);
+        }
+
+        public void RegisterStartField(Model.StartField field)
+        {
+            Debug.WriteLine("Registering startfield with color " + field.Color);
+            switch(field.Color)
+            {
+                case"R":
+                    PlayerR.StartFields.Add(field);
+                    break;
+                case"G":
+                    PlayerG.StartFields.Add(field);
+                    break;
+                case"Y":
+                    PlayerY.StartFields.Add(field);
+                    break;
+                case"B":
+                    PlayerB.StartFields.Add(field);
+                    break;
+            }
         }
 
         public void RollDice()

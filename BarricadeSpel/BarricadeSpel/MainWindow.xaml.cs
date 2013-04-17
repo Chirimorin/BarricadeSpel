@@ -351,6 +351,18 @@ namespace BarricadeSpel
             SpelGrid.ShowGridLines = false;
         }
 
+        public void MoveBarricade(object sender, EventArgs e)
+        {
+            MyEventArgs.MovePawnArgs movePawnArgs = (MyEventArgs.MovePawnArgs)e;
+            int index = movePawnArgs.Index;
+            int newX = movePawnArgs.NewX;
+            int newY = movePawnArgs.NewY;
+
+            Barricades.ElementAt(index).XPos = newX;
+            Barricades.ElementAt(index).YPos = newY;
+
+        }
+
         public void MovePawn(object sender, EventArgs e)
         {
             MyEventArgs.MovePawnArgs movePawnArgs = (MyEventArgs.MovePawnArgs)e;

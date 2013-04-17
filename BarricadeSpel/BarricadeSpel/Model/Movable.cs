@@ -8,8 +8,8 @@ namespace BarricadeSpel.Model
 {
     public class Movable
     {
-        private Field _position;
-        public Field Position 
+        protected Field _position;
+        public virtual Field Position 
         { 
             get { return _position; }
             set 
