@@ -58,6 +58,7 @@
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\ViewController.cs" />
     <Compile Include="Model\Dice.cs" />
+    <Compile Include="MyEventArgs\BoolEventArgs.cs" />
     <Compile Include="MyEventArgs\BroadcastMoveArgs.cs" />
     <Compile Include="MyEventArgs\DiceRolledArgs.cs" />
     <Compile Include="MyEventArgs\DrawFieldArgs.cs" />

@@ -140,6 +140,12 @@ namespace BarricadeSpel.Controller
             MainController.MovePawn(SelectedPawn.DrawIndex, selectedField.XPos, selectedField.YPos);
         }
 
+        public void NewPawn()
+        {
+            SubTurn = "PawnSelect";
+            PawnSelector(Turn);
+        }
+
         public void NextTurn()
         {
             switch(Turn)
@@ -161,6 +167,7 @@ namespace BarricadeSpel.Controller
                     break;
             }
             SubTurn = "DiceRoll";
+            MainController.SkipTurnEnabled(true);
             MainController.NewTurn(Turn);
         }
 
@@ -178,11 +185,13 @@ namespace BarricadeSpel.Controller
                 SelectedPawn.Position.BroadcastMove(Dice.Value, null);
                 Debug.WriteLine("Done broadcasting moves");
                 SubTurn = "MoveSelect";
+                MainController.NewPawnEnabled(true);
                 return;
             }
 
             if (SubTurn == "MoveSelect")
             {
+                MainController.NewPawnEnabled(false);
                 MainController.ResetInputs();
                 Model.Field selectedField = SelectableFields.ElementAt(index);
                 bool barricade = false;
@@ -203,6 +212,7 @@ namespace BarricadeSpel.Controller
                     else if (selectedField.Contains.Type == "barricade")
                     {
                         Debug.WriteLine("Barricade hit!");
+                        MainController.SkipTurnEnabled(false);
                         SelectedBarricade = (Model.Barricade)selectedField.Contains;
                         MovePawn(selectedField);
                         SelectableFields = new List<Model.Field>();

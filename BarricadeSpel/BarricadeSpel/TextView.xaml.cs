@@ -87,6 +87,11 @@ namespace BarricadeSpel
 
         }
 
+        public void NewPawnEnabled(object sender, EventArgs e)
+        {
+
+        }
+
         public void NewTurn(object sender, EventArgs e)
         {
 
@@ -104,6 +109,13 @@ namespace BarricadeSpel
 
         public void ResetInputs(object sender, EventArgs e)
         {
+
+        }
+
+        public void SkipTurnEnabled(object sender, EventArgs e)
+        {
+            MyEventArgs.BoolEventArgs boolEventArgs = (MyEventArgs.BoolEventArgs)e;
+            bool value = boolEventArgs.Value;
 
         }
 

@@ -112,6 +112,11 @@ namespace BarricadeSpel
             }
         }
 
+        private void NewPawn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewController.NewPawn();
+        }
+
         private void OpenItem_Click(object sender, RoutedEventArgs e)
         {
             ViewController.LoadFile();
@@ -120,6 +125,11 @@ namespace BarricadeSpel
         private void RollDice_Click(object sender, RoutedEventArgs e)
         {
             ViewController.RollDice();
+        }
+
+        private void SkipTurn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewController.SkipTurn();
         }
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
@@ -375,6 +385,14 @@ namespace BarricadeSpel
 
         }
 
+        public void NewPawnEnabled(object sender, EventArgs e)
+        {
+            MyEventArgs.BoolEventArgs boolEventArgs = (MyEventArgs.BoolEventArgs)e;
+            bool value = boolEventArgs.Value;
+
+            NewPawn.IsEnabled = value;
+        }
+
         public void NewTurn(object sender, EventArgs e)
         {
 
@@ -433,6 +451,14 @@ namespace BarricadeSpel
                 SpelGrid.Children.Remove(input.MyCanvas);
             }
             Inputs = new List<InputDrawing>();
+        }
+
+        public void SkipTurnEnabled(object sender, EventArgs e)
+        {
+            MyEventArgs.BoolEventArgs boolEventArgs = (MyEventArgs.BoolEventArgs)e;
+            bool value = boolEventArgs.Value;
+
+            SkipTurn.IsEnabled = value;
         }
 
         public void StartLoading(object sender, EventArgs e)

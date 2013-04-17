@@ -131,6 +131,16 @@ namespace BarricadeSpel.Controller
             ViewController.MovePawn(index, newX, newY);
         }
 
+        public void NewPawn()
+        {
+            GameController.NewPawn();
+        }
+
+        public void NewPawnEnabled(bool value)
+        {
+            ViewController.NewPawnEnabled(value);
+        }
+
         public void NewTurn(string color)
         {
             ViewController.NewTurn(color);
@@ -154,6 +164,16 @@ namespace BarricadeSpel.Controller
         public void RollDice()
         {
             GameController.RollDice();
+        }
+
+        public void SkipTurn()
+        {
+            GameController.NextTurn();
+        }
+
+        public void SkipTurnEnabled(bool value)
+        {
+            ViewController.SkipTurnEnabled(value);
         }
 
     }

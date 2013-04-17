@@ -22,10 +22,12 @@ namespace BarricadeSpel.Controller
         public event EventHandler makeGrid;
         public event EventHandler moveBarricade;
         public event EventHandler movePawn;
+        public event EventHandler newPawnEnabled;
         public event EventHandler newTurn;
         public event EventHandler openInput;
         public event EventHandler resetGame;
         public event EventHandler resetInputs;
+        public event EventHandler skipTurnEnabled;
         public event EventHandler startLoading;
         //TODO eventhandlers maken voor andere events (zoals verplaats pion/barricade)
 
@@ -47,18 +49,20 @@ namespace BarricadeSpel.Controller
             {
                 TextView textView = new TextView(this);
 
-                diceRolled += textView.DiceRolled;
-                doneLoading += textView.DoneLoading;
-                drawField += textView.DrawField;
-                drawMovable += textView.DrawMovable;
-                makeGrid += textView.MakeGrid;
-                moveBarricade += textView.MoveBarricade;
-                movePawn += textView.MovePawn;
-                newTurn += textView.NewTurn;
-                openInput += textView.OpenInput;
-                resetGame += textView.ResetGame;
-                resetInputs += textView.ResetInputs;
-                startLoading += textView.StartLoading;
+                diceRolled      += textView.DiceRolled;
+                doneLoading     += textView.DoneLoading;
+                drawField       += textView.DrawField;
+                drawMovable     += textView.DrawMovable;
+                makeGrid        += textView.MakeGrid;
+                moveBarricade   += textView.MoveBarricade;
+                movePawn        += textView.MovePawn;
+                newPawnEnabled  += textView.NewPawnEnabled;
+                newTurn         += textView.NewTurn;
+                openInput       += textView.OpenInput;
+                resetGame       += textView.ResetGame;
+                resetInputs     += textView.ResetInputs;
+                skipTurnEnabled += textView.SkipTurnEnabled;
+                startLoading    += textView.StartLoading;
                 
                 //TODO extra eventhandlers linken
             }
@@ -67,18 +71,20 @@ namespace BarricadeSpel.Controller
             {
                 MainWindow mainWindow = new MainWindow(this);
 
-                diceRolled += mainWindow.DiceRolled;
-                doneLoading += mainWindow.DoneLoading;
-                drawField += mainWindow.DrawField;
-                drawMovable += mainWindow.DrawMovable;
-                makeGrid += mainWindow.MakeGrid;
-                moveBarricade += mainWindow.MoveBarricade;
-                movePawn += mainWindow.MovePawn;
-                newTurn += mainWindow.NewTurn;
-                openInput += mainWindow.OpenInput;
-                resetGame += mainWindow.ResetGame;
-                resetInputs += mainWindow.ResetInputs;
-                startLoading += mainWindow.StartLoading;
+                diceRolled      += mainWindow.DiceRolled;
+                doneLoading     += mainWindow.DoneLoading;
+                drawField       += mainWindow.DrawField;
+                drawMovable     += mainWindow.DrawMovable;
+                makeGrid        += mainWindow.MakeGrid;
+                moveBarricade   += mainWindow.MoveBarricade;
+                movePawn        += mainWindow.MovePawn;
+                newPawnEnabled  += mainWindow.NewPawnEnabled;
+                newTurn         += mainWindow.NewTurn;
+                openInput       += mainWindow.OpenInput;
+                resetGame       += mainWindow.ResetGame;
+                resetInputs     += mainWindow.ResetInputs;
+                skipTurnEnabled += mainWindow.SkipTurnEnabled;
+                startLoading    += mainWindow.StartLoading;
 
                 //TODO extra eventhandlers linken
             }
@@ -168,6 +174,15 @@ namespace BarricadeSpel.Controller
             }
         }
 
+        public void NewPawnEnabled(bool value)
+        {
+            EventHandler handler = newPawnEnabled;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.BoolEventArgs(value));
+            }
+        }
+
         public void ResetGame()
         {
             EventHandler handler = resetGame;
@@ -183,6 +198,15 @@ namespace BarricadeSpel.Controller
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);
+            }
+        }
+
+        public void SkipTurnEnabled(bool value)
+        {
+            EventHandler handler = skipTurnEnabled;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.BoolEventArgs(value));
             }
         }
 
@@ -209,19 +233,31 @@ namespace BarricadeSpel.Controller
             MainController.Cheats_Dice(number);
         }
 
-        public void LoadFile()
-        {
-            MainController.LoadFile();
-        }
-
         public void InputSelected(int index)
         {
             MainController.InputSelected(index);
         }
 
+        public void LoadFile()
+        {
+            MainController.LoadFile();
+        }
+
+        public void NewPawn()
+        {
+            MainController.NewPawn();
+        }
+
         public void RollDice()
         {
             MainController.RollDice();
+        }
+
+        public void SkipTurn()
+        {
+            MainController.SkipTurn();
+            NewPawnEnabled(false);
+            ResetInputs();
         }
 
         public void Test()
