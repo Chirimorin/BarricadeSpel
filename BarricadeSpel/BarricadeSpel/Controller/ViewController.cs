@@ -19,6 +19,7 @@ namespace BarricadeSpel.Controller
         public event EventHandler doneLoading;
         public event EventHandler drawField;
         public event EventHandler drawMovable;
+        public event EventHandler finishGame;
         public event EventHandler makeGrid;
         public event EventHandler moveBarricade;
         public event EventHandler movePawn;
@@ -53,6 +54,7 @@ namespace BarricadeSpel.Controller
                 doneLoading     += textView.DoneLoading;
                 drawField       += textView.DrawField;
                 drawMovable     += textView.DrawMovable;
+                finishGame      += textView.FinishGame;
                 makeGrid        += textView.MakeGrid;
                 moveBarricade   += textView.MoveBarricade;
                 movePawn        += textView.MovePawn;
@@ -63,8 +65,6 @@ namespace BarricadeSpel.Controller
                 resetInputs     += textView.ResetInputs;
                 skipTurnEnabled += textView.SkipTurnEnabled;
                 startLoading    += textView.StartLoading;
-                
-                //TODO extra eventhandlers linken
             }
 
             else if (type == "main")
@@ -75,6 +75,7 @@ namespace BarricadeSpel.Controller
                 doneLoading     += mainWindow.DoneLoading;
                 drawField       += mainWindow.DrawField;
                 drawMovable     += mainWindow.DrawMovable;
+                finishGame      += mainWindow.FinishGame;
                 makeGrid        += mainWindow.MakeGrid;
                 moveBarricade   += mainWindow.MoveBarricade;
                 movePawn        += mainWindow.MovePawn;
@@ -85,8 +86,6 @@ namespace BarricadeSpel.Controller
                 resetInputs     += mainWindow.ResetInputs;
                 skipTurnEnabled += mainWindow.SkipTurnEnabled;
                 startLoading    += mainWindow.StartLoading;
-
-                //TODO extra eventhandlers linken
             }
 
         }
@@ -126,6 +125,15 @@ namespace BarricadeSpel.Controller
             if (handler != null)
             {
                 handler(this, new MyEventArgs.DrawMovableArgs(type, color, xPos, yPos));
+            }
+        }
+
+        public void FinishGame(string color)
+        {
+            EventHandler handler = finishGame;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.FinishGameArgs(color));
             }
         }
 

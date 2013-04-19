@@ -119,6 +119,33 @@ namespace BarricadeSpel.Controller
 
         }
 
+        public void FinishGame(Model.GoalField goalField)
+        {
+            SubTurn = "GameFinished";
+            Model.Pawn pawn = (Model.Pawn)goalField.Contains;
+
+            foreach (Model.Pawn playerPawn in PlayerR.Pawns)
+            {
+                if (pawn == playerPawn)
+                    MainController.FinishGame("R");
+            }
+            foreach (Model.Pawn playerPawn in PlayerG.Pawns)
+            {
+                if (pawn == playerPawn)
+                    MainController.FinishGame("G");
+            }
+            foreach (Model.Pawn playerPawn in PlayerY.Pawns)
+            {
+                if (pawn == playerPawn)
+                    MainController.FinishGame("Y");
+            }
+            foreach (Model.Pawn playerPawn in PlayerB.Pawns)
+            {
+                if (pawn == playerPawn)
+                    MainController.FinishGame("B");
+            }
+        }
+
         public void MakeBarricade(Model.Field position)
         {
             Barricades.Add(new Model.Barricade(position));
@@ -162,29 +189,31 @@ namespace BarricadeSpel.Controller
 
         public void NextTurn()
         {
-            switch(Turn)
+            if (SubTurn != "GameFinished")
             {
-                case "R":
-                    Turn = "G";
-                    break;
-                case "G":
-                    Turn = "Y";
-                    break;
-                case "Y":
-                    Turn = "B";
-                    break;
-                case "B":
-                    Turn = "R";
-                    break;
-                default:
-                    Turn = "R";
-                    break;
+                switch (Turn)
+                {
+                    case "R":
+                        Turn = "G";
+                        break;
+                    case "G":
+                        Turn = "Y";
+                        break;
+                    case "Y":
+                        Turn = "B";
+                        break;
+                    case "B":
+                        Turn = "R";
+                        break;
+                    default:
+                        Turn = "R";
+                        break;
+                }
+                SubTurn = "DiceRoll";
+                MainController.SkipTurnEnabled(true);
+                MainController.NewTurn(Turn);
+                AIController.NewTurn(Turn);
             }
-            SubTurn = "DiceRoll";
-            MainController.SkipTurnEnabled(true);
-            MainController.NewTurn(Turn);
-            AIController.NewTurn(Turn);
-
         }
 
         public void InputSelected(int index)

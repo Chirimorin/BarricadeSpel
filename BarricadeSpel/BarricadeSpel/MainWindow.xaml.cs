@@ -327,6 +327,39 @@ namespace BarricadeSpel
             }
         }
 
+        public void FinishGame(object sender, EventArgs e)
+        {
+            MyEventArgs.FinishGameArgs finishGameArgs = (MyEventArgs.FinishGameArgs)e;
+            string color = finishGameArgs.Color;
+
+            NewPawn.IsEnabled = false;
+            RollDice.IsEnabled = false;
+            SkipTurn.IsEnabled = false;
+
+            string fullColorString;
+
+            switch (color)
+            {
+                case "R":
+                    fullColorString = "rood";
+                    break;
+                case "G":
+                    fullColorString = "groen";
+                    break;
+                case "Y":
+                    fullColorString = "geel";
+                    break;
+                case "B":
+                    fullColorString = "blauw";
+                    break;
+                default:
+                    fullColorString = "onbekend";
+                    break;
+            }
+
+            MessageBox.Show("Speler " + fullColorString + " wint!");
+        }
+
         public void MakeGrid(object sender, EventArgs e)
         {
             ClearGrid();

@@ -30,10 +30,8 @@ namespace BarricadeSpel
             this.Show();
         }
 
-        //Input handling
 
-
-        //Output functions
+         //Output functions
         public void DiceRolled(object sender, EventArgs e)
         {
             
@@ -65,6 +63,11 @@ namespace BarricadeSpel
             int yPos = drawMovableArgs.YPos;
 
             //TODO draw the movable
+        }
+
+        public void FinishGame(object sender, EventArgs e)
+        {
+
         }
 
         public void MakeGrid(object sender, EventArgs e)

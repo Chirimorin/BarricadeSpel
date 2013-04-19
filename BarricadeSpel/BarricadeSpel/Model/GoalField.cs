@@ -11,6 +11,8 @@ namespace BarricadeSpel.Model
     {
         public override event EventHandler broadcastMove;
 
+        public event EventHandler finishGame;
+
         public override Movable Contains
         {
             set
@@ -32,6 +34,14 @@ namespace BarricadeSpel.Model
         private void FinishGame() //TODO make whole function
         {
             Debug.WriteLine("GAME FINISHED!");
+            
+            Pawn pawn = (Model.Pawn)_contains;
+
+            EventHandler handler = finishGame;
+            if (handler != null)
+            {
+                handler(this, new MyEventArgs.FinishGameArgs(null));
+            }
         }
 
         public override void BroadcastMove(int numSteps, Field comesFrom)

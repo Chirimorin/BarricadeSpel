@@ -35,6 +35,18 @@ namespace BarricadeSpel.Controller
             OpenInput(xPos, yPos);
         }
 
+        public void FinishGame(string color)
+        {
+            ViewController.FinishGame(color);
+        }
+
+        public void FinishGame(object sender, EventArgs e)
+        {
+            Model.GoalField goalField = (Model.GoalField)sender;
+
+            GameController.FinishGame(goalField);
+        }
+
         public void LoadFile()
         {
             System.Reflection.Assembly thisExe = System.Reflection.Assembly.GetExecutingAssembly();

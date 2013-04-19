@@ -88,8 +88,10 @@ namespace BarricadeSpel.Controller
                             case "<":
                                 if (characters[(j * 4) + 1, i] == " ") //goal
                                 {
-                                    fields[j - 1, (i / 2)] = new Model.GoalField(exitN, null, null, exitW, j - 1, (i / 2));
+                                    Model.GoalField goalField = new Model.GoalField(exitN, null, null, exitW, j - 1, (i / 2));
+                                    fields[j - 1, (i / 2)] = goalField;
                                     mainController.DrawField("GoalField", j - 1, (i / 2));
+                                    goalField.finishGame += mainController.FinishGame;
                                     break;
                                 }
                                 int numForest;

@@ -74,6 +74,7 @@
     <Compile Include="Model\SafeField.cs" />
     <Compile Include="Model\StartField.cs" />
     <Compile Include="MyEventArgs\DrawMovableArgs.cs" />
+    <Compile Include="MyEventArgs\FinishGameArgs.cs" />
     <Compile Include="MyEventArgs\MakeGridArgs.cs" />
     <Compile Include="MyEventArgs\MoveMovableArgs.cs" />
     <Compile Include="MyEventArgs\NewTurnArgs.cs" />
@@ -126,6 +127,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Levels\NearFinish.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Levels\Normaal.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
