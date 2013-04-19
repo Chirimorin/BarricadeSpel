@@ -217,6 +217,7 @@ namespace BarricadeSpel
             switch (type)
             {
                 case "Field":
+                case "Forest":
                 case "StartField":
                 case "SafeField":
                 case "GoalField":
@@ -233,6 +234,10 @@ namespace BarricadeSpel
                     {
                         case "Field":
                             myCircle.Fill = Brushes.Black;
+                            break;
+
+                        case "Forest":
+                            myCircle.Fill = Brushes.DarkGreen;
                             break;
 
                         case "StartField":
@@ -288,10 +293,6 @@ namespace BarricadeSpel
                             break;
                     }
                     SpelGrid.Children.Add(myLine);
-                    break;
-
-                case "Forest":
-                    //TODO teken forest
                     break;
             }
         }
