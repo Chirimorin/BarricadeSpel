@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\AIController.cs" />
     <Compile Include="Controller\FileReader.cs" />
     <Compile Include="Controller\GameController.cs" />
     <Compile Include="Controller\MainController.cs" />

@@ -33,16 +33,25 @@ namespace BarricadeSpel.Controller
         public Model.Dice Dice { get; set; }
 
         private MainController MainController { get; set; }
+        private AIController AIController { get; set; }
 
         //Constructor
         public GameController(MainController mainController)
         {
             MainController = mainController;
+            AIController = new AIController(this);
             ResetGame();
         }
 
 
         //Functions
+        public void AddSelectablePawn(Model.Pawn pawn)
+        {
+            SelectablePawns.Add(pawn);
+            MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+            AIController.AddSelection();
+        }
+
         public void Cheats_Dice(int number)
         {
             SubTurn = "PawnSelect";
@@ -59,9 +68,9 @@ namespace BarricadeSpel.Controller
         public void ClearMovables()
         {
             PlayerR = new Model.Player(true); //TODO Choose AI players
-            PlayerG = new Model.Player(true);
-            PlayerY = new Model.Player(true);
-            PlayerB = new Model.Player(true);
+            PlayerG = new Model.Player(false);
+            PlayerY = new Model.Player(false);
+            PlayerB = new Model.Player(false);
 
             Forests = new List<Model.Forest>();
             Barricades = new List<Model.Barricade>();
@@ -146,6 +155,11 @@ namespace BarricadeSpel.Controller
             PawnSelector(Turn);
         }
 
+        public void NewPawnEnabled(bool value)
+        {
+            MainController.NewPawnEnabled(value);
+        }
+
         public void NextTurn()
         {
             switch(Turn)
@@ -169,6 +183,8 @@ namespace BarricadeSpel.Controller
             SubTurn = "DiceRoll";
             MainController.SkipTurnEnabled(true);
             MainController.NewTurn(Turn);
+            AIController.NewTurn(Turn);
+
         }
 
         public void InputSelected(int index)
@@ -179,20 +195,21 @@ namespace BarricadeSpel.Controller
                 SelectedPawn = SelectablePawns.ElementAt(index);
                 SelectablePawns = null;
 
-                MainController.ResetInputs();
+                ResetInputs();
                 SelectableFields = new List<Model.Field>();
 
                 SelectedPawn.Position.BroadcastMove(Dice.Value, null);
                 Debug.WriteLine("Done broadcasting moves");
                 SubTurn = "MoveSelect";
                 MainController.NewPawnEnabled(true);
+                AIController.SelectInput();
                 return;
             }
 
             if (SubTurn == "MoveSelect")
             {
                 MainController.NewPawnEnabled(false);
-                MainController.ResetInputs();
+                ResetInputs();
                 Model.Field selectedField = SelectableFields.ElementAt(index);
                 bool barricade = false;
                 if (selectedField.Contains != null)
@@ -217,10 +234,11 @@ namespace BarricadeSpel.Controller
                         MovePawn(selectedField);
                         SelectableFields = new List<Model.Field>();
                         barricade = true;
-                        MainController.ResetInputs();
+                        ResetInputs();
                         SelectedPawn.Position.BroadcastBarricades(null);
                         
                         SubTurn = "BarricadeMove";
+                        AIController.SelectInput();
                     }
                 }
                 else
@@ -238,7 +256,7 @@ namespace BarricadeSpel.Controller
             if (SubTurn == "BarricadeMove")
             {
                 SelectedBarricade.Position.ResetBroadcastedBarricades(null);
-                MainController.ResetInputs();
+                ResetInputs();
                 Model.Field selectedField = SelectableFields.ElementAt(index);
                 SelectedBarricade.Position = selectedField;
                 MainController.MoveBarricade(SelectedBarricade.DrawIndex, selectedField.XPos, selectedField.YPos);
@@ -249,7 +267,7 @@ namespace BarricadeSpel.Controller
 
         public void PawnSelector(string color) //Makes all pawns of said color available to be chosen.
         {
-            MainController.ResetInputs();
+            ResetInputs();
             SelectablePawns = new List<Model.Pawn>();
 
             switch (color)
@@ -257,32 +275,30 @@ namespace BarricadeSpel.Controller
                 case "R":
                     foreach (Model.Pawn pawn in PlayerR.Pawns)
                     {
-                        SelectablePawns.Add(pawn);
-                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                        AddSelectablePawn(pawn);
                     }
                     break;
                 case "G":
                     foreach (Model.Pawn pawn in PlayerG.Pawns)
                     {
-                        SelectablePawns.Add(pawn);
-                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                        AddSelectablePawn(pawn);
                     }
                     break;
                 case "Y":
                     foreach (Model.Pawn pawn in PlayerY.Pawns)
                     {
-                        SelectablePawns.Add(pawn);
-                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                        AddSelectablePawn(pawn);
                     }
                     break;
                 case "B":
                     foreach (Model.Pawn pawn in PlayerB.Pawns)
                     {
-                        SelectablePawns.Add(pawn);
-                        MainController.OpenInput(pawn.Position.XPos, pawn.Position.YPos);
+                        AddSelectablePawn(pawn);
                     }
                     break;
             }
+
+            AIController.SelectInput();
         }
 
         public void ResetGame()
@@ -290,6 +306,12 @@ namespace BarricadeSpel.Controller
             ClearMovables();
             Dice = new Model.Dice();
             Turn = null;
+        }
+
+        public void ResetInputs()
+        {
+            MainController.ResetInputs();
+            AIController.ResetInputs();
         }
 
         public void ReturnPawn(Model.Pawn hitPawn, Model.Player player, int returnTo)
@@ -331,6 +353,7 @@ namespace BarricadeSpel.Controller
         public void RegisterSelectableField(Model.Field field)
         {
             SelectableFields.Add(field);
+            AIController.AddSelection();
         }
 
         public void RegisterStartField(Model.StartField field)
