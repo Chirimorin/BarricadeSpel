@@ -252,7 +252,7 @@ namespace BarricadeSpel
                             myCircle.Fill = Brushes.LightGreen;
                             break;
                         case "BarricadeField":
-                            myCircle.Fill = System.Windows.Media.Brushes.Red;
+                            myCircle.Fill = Brushes.Red;
                             break;
                     }
                     SpelGrid.Children.Add(myCircle);
